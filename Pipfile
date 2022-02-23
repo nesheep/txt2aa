@@ -7,9 +7,11 @@ name = "pypi"
 pyinstaller = "*"
 pysimplegui = "*"
 pillow = "*"
+numpy = "*"
 
 [dev-packages]
 autopep8 = "*"
+isort = "*"
 
 [requires]
 python_version = "3.9"

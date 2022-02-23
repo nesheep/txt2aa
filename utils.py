@@ -1,6 +1,7 @@
 from __future__ import annotations
-from pathlib import Path
+
 import sys
+from pathlib import Path
 
 
 def resource_path(relative_path: str | Path) -> str:
