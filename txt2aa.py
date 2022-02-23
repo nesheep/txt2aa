@@ -1,5 +1,3 @@
-from typing import Any
-
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
@@ -9,18 +7,21 @@ FONT = "C:/Windows/Fonts/msgothic.ttc"
 STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
 
 
-def __make_map(str_list: list[str]) -> Any:
+def __make_map(str_list: list[str]) -> np.ndarray:
     l = []
-    font = ImageFont.truetype(FONT, 40)
+    font_size = 20
+    font = ImageFont.truetype(FONT, font_size)
     for i in str_list:
-        img = Image.new("L", (20, 20), "white")
+        img = Image.new("L", (font_size * 2, font_size * 2), "white")
         draw = ImageDraw.Draw(img)
-        draw.text((0, 0), i, font=font)
+        draw.text((font_size, font_size), i, "black", font, "mm")
         l.append(np.asarray(img).mean())
     l_as = np.argsort(l)
     lenl = len(l)
-    l256 = np.r_[np.repeat(l_as[:-(256 % lenl)], 256 // lenl),
-                 np.repeat(l_as[-(256 % lenl):], 256 // lenl + 1)]
+    l256 = np.hstack((
+        np.repeat(l_as[:-(256 % lenl)], 256 // lenl),
+        np.repeat(l_as[-(256 % lenl):], 256 // lenl + 1),
+    ))
     return np.array(str_list)[l256]
 
 
@@ -38,25 +39,26 @@ def txt2img(
 
 def img2aa(
     img: Image.Image,
+    cel_size: int = 10,
     str_list: list[str] = list(STRS),
 ) -> list[list[str]]:
     img_x, img_y = img.size
     gray_img = img.convert("L")
-    gray_img = gray_img.resize((img_x // 10, img_y // 10))
+    gray_img = gray_img.resize((img_x // cel_size, img_y // cel_size))
     img_arr = np.asarray(gray_img)
     chr_map = __make_map(str_list)
     aa = chr_map[img_arr]
-    aa = aa.tolist()
-    return aa
+    return aa.tolist()
 
 
 def aa2img(
     aa: list[list[str]],
+    font_size: int = 10,
     size: tuple[int, int] = D.IMG_SIZE,
 ) -> Image.Image:
     img = Image.new("RGBA", size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(FONT, 10)
+    font = ImageFont.truetype(FONT, font_size)
     x, y = size
     cel_x = x / max([len(r) for r in aa])
     cel_y = y / len(aa)
