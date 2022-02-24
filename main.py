@@ -1,25 +1,44 @@
-import PySimpleGUI as sg
+from io import BytesIO
+from pathlib import Path
 
-from constants import ICON, TITLE, K
-from handlers import *
-from layout import layout
+import webview
+from flask import Flask, make_response, render_template, request, send_file
+
+from txt2aa import txt2aa_img, txt2img
 from utils import resource_path
 
+server = Flask(__name__)
+html_folder = resource_path(Path("front/build"))
+server.static_folder = html_folder / "static"
+server.template_folder = html_folder
 
-def main() -> None:
-    window = sg.Window(TITLE, layout.main, icon=resource_path(ICON))
+window = webview.create_window("pwv-flask", server)
 
-    while True:
-        if event_values := window.read():
-            event, values = event_values
-            if event == sg.WIN_CLOSED:
-                break
-            elif isinstance(values, dict):
-                if event == K.CONVERT_BTN:
-                    handle_convert_btn(values)
 
-    window.close()
+@server.route("/")
+def index():
+    return render_template("index.html")
+
+
+@server.route("/txt2img")
+def get_txt2img():
+    txt = request.args.get("txt", "")
+    img = txt2img(txt)
+    img_io = BytesIO()
+    img.save(img_io, "png")
+    img_io.seek(0)
+    return make_response(send_file(img_io, mimetype="image/png"))
+
+
+@server.route("/txt2aa/img")
+def get_txt2aa_img():
+    txt = request.args.get("txt", "")
+    img = txt2aa_img(txt)
+    img_io = BytesIO()
+    img.save(img_io, "png")
+    img_io.seek(0)
+    return make_response(send_file(img_io, mimetype="image/png"))
 
 
 if __name__ == "__main__":
-    main()
+    webview.start(gui="edgechromium")
