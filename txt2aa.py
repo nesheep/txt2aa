@@ -1,10 +1,11 @@
+from __future__ import annotations
+
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-from constants import D
-
 FONT = "C:/Windows/Fonts/msgothic.ttc"
 STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
+IMG_SIZE = (500, 300)
 
 
 def __make_map(str_list: list[str]) -> np.ndarray:
@@ -27,7 +28,7 @@ def __make_map(str_list: list[str]) -> np.ndarray:
 
 def txt2img(
     txt: str,
-    size: tuple[int, int] = D.IMG_SIZE,
+    size: tuple[int, int] = IMG_SIZE,
 ) -> Image.Image:
     img = Image.new("RGBA", size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
@@ -54,7 +55,7 @@ def img2aa(
 def aa2img(
     aa: list[list[str]],
     font_size: int = 10,
-    size: tuple[int, int] = D.IMG_SIZE,
+    size: tuple[int, int] = IMG_SIZE,
 ) -> Image.Image:
     img = Image.new("RGBA", size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
@@ -68,3 +69,13 @@ def aa2img(
             xy = (cel_x * (c + 0.5), cel_y * (r + 0.5))
             draw.text(xy, aa_row[c], (0, 0, 0), font, "mm")
     return img
+
+
+def txt2aa(txt: str) -> list[list[str]]:
+    img = txt2img(txt)
+    return img2aa(img)
+
+
+def txt2aa_img(txt: str) -> Image.Image:
+    aa = txt2aa(txt)
+    return aa2img(aa)

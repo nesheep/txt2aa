@@ -5,7 +5,8 @@ name = "pypi"
 
 [packages]
 pyinstaller = "*"
-pysimplegui = "*"
+pywebview = "*"
+flask = "*"
 pillow = "*"
 numpy = "*"
 
@@ -14,8 +15,8 @@ autopep8 = "*"
 isort = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.8"
 
 [scripts]
 start = "python main.py"
-build = "pyinstaller main.spec --onefile"
+build = "pyinstaller --onefile --clean main.spec"
