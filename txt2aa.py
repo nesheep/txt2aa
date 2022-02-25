@@ -5,7 +5,6 @@ from PIL import Image, ImageDraw, ImageFont
 
 FONT = "C:/Windows/Fonts/msgothic.ttc"
 STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
-IMG_SIZE = (500, 300)
 
 
 def __make_map(str_list: list[str]) -> np.ndarray:
@@ -28,12 +27,18 @@ def __make_map(str_list: list[str]) -> np.ndarray:
 
 def txt2img(
     txt: str,
-    size: tuple[int, int] = IMG_SIZE,
+    font_path: str = FONT,
+    font_size: int = 200,
 ) -> Image.Image:
-    img = Image.new("RGBA", size, (255, 255, 255, 0))
+    if not txt:
+        return Image.new("RGBA", (100, 100), (255, 255, 255, 0))
+    img = Image.new("RGBA", (1, 1))
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype(FONT, 200)
-    x, y = size
+    font = ImageFont.truetype(font_path, font_size)
+    x, y = draw.textsize(txt, font)
+    x, y = int(x + font_size * 0.1), int(y + font_size * 0.1)
+    img = Image.new("RGBA", (x, y), (255, 255, 255, 0))
+    draw = ImageDraw.Draw(img)
     draw.text((x / 2, y / 2), txt, (0, 0, 0), font, "mm")
     return img
 
@@ -54,8 +59,8 @@ def img2aa(
 
 def aa2img(
     aa: list[list[str]],
+    size: tuple[int, int],
     font_size: int = 10,
-    size: tuple[int, int] = IMG_SIZE,
 ) -> Image.Image:
     img = Image.new("RGBA", size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
@@ -77,5 +82,8 @@ def txt2aa(txt: str) -> list[list[str]]:
 
 
 def txt2aa_img(txt: str) -> Image.Image:
-    aa = txt2aa(txt)
-    return aa2img(aa)
+    if not txt:
+        return Image.new("RGBA", (100, 100), (255, 255, 255, 0))
+    img = txt2img(txt)
+    aa = img2aa(img)
+    return aa2img(aa, img.size)
