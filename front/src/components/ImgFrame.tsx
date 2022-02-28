@@ -7,30 +7,28 @@ type Props = {
   src: string;
 };
 
-const ImgFrame: FC<Props> = ({ alt, src }) => {
-  return (
-    <Box sx={{
-      flexGrow: 1,
-      width: '100%',
-      mt: 2,
-      bgcolor: '#95ca7f',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
-      <img
-        alt={alt}
-        src={src}
-        style={{
-          height: 180,
-          width: '100%',
-          backgroundColor: common.white,
-          display: 'block',
-          objectFit: 'scale-down',
-        }}
-      />
-    </Box>
-  );
-};
+const ImgFrame: FC<Props> = ({ alt, src }) => (
+  <Box sx={{
+    flexGrow: 1,
+    width: '100%',
+    mt: 2,
+    bgcolor: '#95ca7f',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}>
+    <img
+      alt={alt}
+      src={src}
+      style={{
+        height: 180,
+        width: '100%',
+        backgroundColor: common.white,
+        display: 'block',
+        objectFit: 'scale-down',
+      }}
+    />
+  </Box>
+);
 
 export default ImgFrame;

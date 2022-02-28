@@ -1,11 +1,13 @@
 import { FC, useState } from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 
+import ConditionArea from './components/ConditionArea';
 import ImgFrame from './components/ImgFrame';
+import Condition, { initialCondition } from './models/condition';
 
 const App: FC = () => {
-  const [txt, setTxt] = useState('aa');
+  const [condition, setCondition] = useState<Condition>(initialCondition);
+  const { txt, fontSize, numy, exp } = condition;
 
   return (
     <Box sx={{
@@ -20,28 +22,17 @@ const App: FC = () => {
       flexDirection: 'column',
       alignItems: 'center',
     }}>
-      <Box sx={{
-        width: '100%',
-        maxWidth: 800,
-        display: 'flex',
-      }}>
-        <TextField
-          variant="standard"
-          value={txt}
-          onChange={e => setTxt(e.target.value)}
-          sx={{
-            flexGrow: 1,
-            bgcolor: '#95ca7f',
-          }}
-        />
-      </Box>
+      <ConditionArea
+        condition={condition}
+        setCondition={setCondition}
+      />
       <ImgFrame
         alt="txt2img"
-        src={`/txt2img?txt=${txt}`}
+        src={`/txt2img?txt=${txt}&fs=${fontSize}`}
       />
       <ImgFrame
         alt="txt2aa_img"
-        src={`/txt2aa/img?txt=${txt}`}
+        src={`/txt2aa/img?txt=${txt}&fs=${fontSize}&ny=${numy}&exp=${exp}`}
       />
     </Box>
   );
