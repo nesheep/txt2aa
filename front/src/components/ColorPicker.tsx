@@ -28,7 +28,6 @@ const ColorPicker: FC<Props> = ({ color, onAccept }) => {
           flexGrow: 1,
           height: 28,
           mr: 2.5,
-          my: 1,
           bgcolor: color,
           border: '1px solid rgba(0, 0, 0, 0.3)',
           borderRadius: 2,

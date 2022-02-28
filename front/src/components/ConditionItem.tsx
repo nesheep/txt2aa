@@ -11,7 +11,7 @@ const ConditionItem: FC<Props> = ({ label, children }) => (
   <>
     <Grid
       item
-      xs={4}
+      xs={2}
       display="flex"
       alignItems="center"
     >
@@ -21,9 +21,10 @@ const ConditionItem: FC<Props> = ({ label, children }) => (
     </Grid>
     <Grid
       item
-      xs={8}
+      xs={4}
       display="flex"
       alignItems="center"
+      sx={{pr: 4}}
     >
       {children}
     </Grid>
