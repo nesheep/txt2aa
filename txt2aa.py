@@ -29,6 +29,7 @@ def txt2img(
     txt: str,
     fontpath: str,
     fontsize: int,
+    color: str = "black",
 ) -> Image.Image:
     img = Image.new("RGBA", (1, 1))
     draw = ImageDraw.Draw(img)
@@ -37,7 +38,7 @@ def txt2img(
     x, y = int(x + fontsize * 0.2), int(y + fontsize * 0.2)
     img = Image.new("RGBA", (x, y), (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
-    draw.text((x / 2, y / 2), txt, (0, 0, 0), font, "mm")
+    draw.text((x / 2, y / 2), txt, color, font, "mm")
     return img
 
 
@@ -59,6 +60,7 @@ def aa2img(
     aa: list[list[str]],
     size: tuple[int, int],
     exp: float,
+    color: str = "black",
 ) -> Image.Image:
     img = Image.new("RGBA", size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
@@ -70,7 +72,7 @@ def aa2img(
         for aa_str, c in zip(aa_row, range(len(aa_row))):
             if aa_str:
                 xy = (cel_x * (c + 0.5), cel_y * (r + 0.5))
-                draw.text(xy, aa_str, (0, 0, 0), font, "mm")
+                draw.text(xy, aa_str, color, font, "mm")
     return img
 
 
@@ -88,9 +90,10 @@ def txt2aa_img(
     txt: str,
     fontpath: str,
     fontsize: int,
+    color: str,
     numy: int,
     exp: float,
 ) -> Image.Image:
     img = txt2img(txt, fontpath, fontsize)
     aa = img2aa(img, numy)
-    return aa2img(aa, img.size, exp)
+    return aa2img(aa, img.size, exp, color)

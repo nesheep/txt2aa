@@ -1,35 +1,20 @@
-import { Dispatch, FC, ReactNode, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 
+import ColorPicker from './ColorPicker';
+import ConditionItem from './ConditionItem';
 import Condition from '../models/condition';
-
-type GridItemProps = {
-  xs: number;
-  children: ReactNode;
-};
 
 type Props = {
   condition: Condition;
   setCondition: Dispatch<SetStateAction<Condition>>;
 };
 
-const GridItem: FC<GridItemProps> = ({ xs, children }) => (
-  <Grid
-    item
-    xs={xs}
-    display="flex"
-    alignItems="center"
-  >
-    {children}
-  </Grid>
-);
-
 const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
-  const { txt, fontSize, numy, exp } = condition;
+  const { txt, fontSize, color, numy, exp } = condition;
 
   return (
     <Box sx={{
@@ -54,18 +39,13 @@ const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
         }}>
           <Grid
             container
-            alignItems="flex-start"
+            spacing={1}
             sx={{
               width: '100%',
               pr: 4,
             }}
           >
-            <GridItem xs={4}>
-              <Typography variant="subtitle1">
-                フォントサイズ
-              </Typography>
-            </GridItem>
-            <GridItem xs={8}>
+            <ConditionItem label="フォントサイズ">
               <Slider
                 min={50}
                 max={400}
@@ -73,7 +53,13 @@ const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
                 value={fontSize}
                 onChange={(_, value) => setCondition(prev => ({ ...prev, fontSize: Number(value) }))}
               />
-            </GridItem>
+            </ConditionItem>
+            <ConditionItem label="色">
+              <ColorPicker
+                color={color}
+                onAccept={c => setCondition(prev => ({ ...prev, color: c }))}
+              />
+            </ConditionItem>
           </Grid>
           <Grid
             container
@@ -82,12 +68,7 @@ const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
               pr: 2,
             }}
           >
-            <GridItem xs={4}>
-              <Typography variant="subtitle1">
-                AA文字数（縦）
-              </Typography>
-            </GridItem>
-            <GridItem xs={8}>
+            <ConditionItem label="AA文字数（縦）">
               <Slider
                 min={10}
                 max={50}
@@ -95,13 +76,8 @@ const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
                 value={numy}
                 onChange={(_, value) => setCondition(prev => ({ ...prev, numy: Number(value) }))}
               />
-            </GridItem>
-            <GridItem xs={4}>
-              <Typography variant="subtitle1">
-                AAフォント倍率
-              </Typography>
-            </GridItem>
-            <GridItem xs={8}>
+            </ConditionItem>
+            <ConditionItem label="AAフォント倍率">
               <Slider
                 min={0.5}
                 max={3}
@@ -110,7 +86,7 @@ const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
                 value={exp}
                 onChange={(_, value) => setCondition(prev => ({ ...prev, exp: Number(value) }))}
               />
-            </GridItem>
+            </ConditionItem>
           </Grid>
         </Box>
       </Box>

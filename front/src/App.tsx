@@ -7,7 +7,7 @@ import Condition, { initialCondition } from './models/condition';
 
 const App: FC = () => {
   const [condition, setCondition] = useState<Condition>(initialCondition);
-  const { txt, fontSize, numy, exp } = condition;
+  const { txt, fontSize, color, numy, exp } = condition;
 
   return (
     <Box sx={{
@@ -28,11 +28,11 @@ const App: FC = () => {
       />
       <ImgFrame
         alt="txt2img"
-        src={`/txt2img?txt=${txt}&fs=${fontSize}`}
+        src={`/txt2img?txt=${txt}&fs=${fontSize}&clr=${color.slice(1)}`}
       />
       <ImgFrame
         alt="txt2aa_img"
-        src={`/txt2aa/img?txt=${txt}&fs=${fontSize}&ny=${numy}&exp=${exp}`}
+        src={`/txt2aa/img?txt=${txt}&fs=${fontSize}&clr=${color.slice(1)}&ny=${numy}&exp=${exp}`}
       />
     </Box>
   );
