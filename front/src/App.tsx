@@ -12,7 +12,6 @@ const App: FC = () => {
   return (
     <Box sx={{
       p: 2,
-      bgcolor: '#79a467',
       position: 'absolute',
       top: 0,
       right: 0,

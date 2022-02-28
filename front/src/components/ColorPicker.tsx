@@ -18,26 +18,27 @@ const ColorPicker: FC<Props> = ({ color, onAccept }) => {
   }, [color]);
 
   return (
-    <Box sx={{
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-    }}>
+    <Box sx={{ width: '100%' }}>
       <Box sx={{
-        flexGrow: 1,
-        height: 28,
-        mr: 2.5,
-        my: 1,
-        bgcolor: color,
-        border: '1px solid rgba(0, 0, 0, 0.3)',
-        borderRadius: 2,
-      }} />
-      <Button
-        variant="outlined"
-        onClick={() => setOpen(true)}
-      >
-        変更
-      </Button>
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+        <Box sx={{
+          flexGrow: 1,
+          height: 28,
+          mr: 2.5,
+          bgcolor: color,
+          border: '1px solid rgba(0, 0, 0, 0.3)',
+          borderRadius: 2,
+        }} />
+        <Button
+          variant="outlined"
+          onClick={() => setOpen(true)}
+        >
+          変更
+        </Button>
+      </Box>
       {open &&
         <>
           <button
