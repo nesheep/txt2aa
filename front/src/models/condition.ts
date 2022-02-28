@@ -1,8 +1,8 @@
 type Condition = {
   txt: string;
   font: string;
-  color: string;
   fontSize: number;
+  color: string;
   aaFont: string;
   numy: number;
   exp: number;
@@ -11,8 +11,8 @@ type Condition = {
 export const initialCondition: Condition = {
   txt: 'aa',
   font: '',
-  color: '#000000',
   fontSize: 200,
+  color: '#000000',
   aaFont: '',
   numy: 20,
   exp: 1,

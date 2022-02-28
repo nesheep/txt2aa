@@ -27,6 +27,8 @@ def index() -> str:
 @server.route("/txt2img")
 def get_txt2img() -> Response:
     txt = request.args.get("txt", "")
+    color = f"#{request.args.get('clr', '000000')}"
+
     font_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
 
@@ -34,7 +36,7 @@ def get_txt2img() -> Response:
     fontsize = int(fs_arg) if isint(fs_arg) else 200
 
     try:
-        img = txt2img(txt, fontpath, fontsize)
+        img = txt2img(txt, fontpath, fontsize, color)
     except:
         img = EMPTY_IMG
 
@@ -48,6 +50,8 @@ def get_txt2img() -> Response:
 @server.route("/txt2aa/img")
 def get_txt2aa_img() -> Response:
     txt = request.args.get("txt", "")
+    color = f"#{request.args.get('clr', '000000')}"
+
     font_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
     ny_arg = request.args.get("ny", "")
@@ -59,7 +63,7 @@ def get_txt2aa_img() -> Response:
     exp = float(exp_arg) if isfloat(exp_arg) else 1.0
 
     try:
-        img = txt2aa_img(txt, fontpath, fontsize, numy, exp)
+        img = txt2aa_img(txt, fontpath, fontsize, color, numy, exp)
     except:
         img = EMPTY_IMG
 
