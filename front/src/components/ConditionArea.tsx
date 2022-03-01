@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 
 import ColorPicker from './ColorPicker';
 import ConditionItem from './ConditionItem';
+import FontSelect from './FontSelect';
 import Condition from '../models/condition';
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 };
 
 const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
-  const { txt, fontSize, color, numy, exp } = condition;
+  const { txt, font, fontSize, color, aaFont, numy, exp } = condition;
 
   return (
     <Box sx={{
@@ -38,6 +39,18 @@ const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
           spacing={1}
           mt={1.5}
         >
+          <ConditionItem label="フォント">
+            <FontSelect
+              value={font}
+              onChange={value => setCondition(prev => ({ ...prev, font: value }))}
+            />
+          </ConditionItem>
+          <ConditionItem label="AAフォント">
+            <FontSelect
+              value={aaFont}
+              onChange={value => setCondition(prev => ({ ...prev, aaFont: value }))}
+            />
+          </ConditionItem>
           <ConditionItem label="フォントサイズ">
             <Slider
               min={20}
@@ -74,7 +87,7 @@ const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
           </ConditionItem>
         </Grid>
       </Box>
-    </Box >
+    </Box>
   );
 };
 
