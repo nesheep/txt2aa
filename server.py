@@ -29,10 +29,10 @@ def get_txt2img() -> Response:
     txt = request.args.get("txt", "")
     color = f"#{request.args.get('clr', '000000')}"
 
-    font_arg = request.args.get("fnt", "")
+    fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
 
-    fontpath = font_arg if is_valid_font(font_arg) else FONT
+    fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
     fontsize = int(fs_arg) if isint(fs_arg) else 200
 
     try:
@@ -52,18 +52,20 @@ def get_txt2aa_img() -> Response:
     txt = request.args.get("txt", "")
     color = f"#{request.args.get('clr', '000000')}"
 
-    font_arg = request.args.get("fnt", "")
+    fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
+    afnt_arg = request.args.get("afnt", "")
     ny_arg = request.args.get("ny", "")
     exp_arg = request.args.get("exp", "")
 
-    fontpath = font_arg if is_valid_font(font_arg) else FONT
+    fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
     fontsize = int(fs_arg) if isint(fs_arg) else 200
+    aa_font = afnt_arg if is_valid_font(afnt_arg) else FONT
     numy = int(ny_arg) if isint(ny_arg) else 20
     exp = float(exp_arg) if isfloat(exp_arg) else 1.0
 
     try:
-        img = txt2aa_img(txt, fontpath, fontsize, color, numy, exp)
+        img = txt2aa_img(txt, fontpath, fontsize, color, aa_font, numy, exp)
     except:
         img = EMPTY_IMG
 

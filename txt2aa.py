@@ -9,12 +9,12 @@ STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;
 
 def __make_map(str_list: list[str]) -> np.ndarray:
     l = []
-    font_size = 20
-    font = ImageFont.truetype(FONT, font_size)
+    fontsize = 20
+    font = ImageFont.truetype(FONT, fontsize)
     for i in str_list:
-        img = Image.new("L", (font_size * 2, font_size * 2), "white")
+        img = Image.new("L", (fontsize * 2, fontsize * 2), "white")
         draw = ImageDraw.Draw(img)
-        draw.text((font_size, font_size), i, "black", font, "mm")
+        draw.text((fontsize, fontsize), i, "black", font, "mm")
         l.append(np.asarray(img).mean())
     l_as = np.argsort(l)
     lenl = len(l)
@@ -59,6 +59,7 @@ def img2aa(
 def aa2img(
     aa: list[list[str]],
     size: tuple[int, int],
+    fontpath: str,
     exp: float,
     color: str = "black",
 ) -> Image.Image:
@@ -67,7 +68,7 @@ def aa2img(
     x, y = size
     cel_x = x / max([len(r) for r in aa])
     cel_y = y / len(aa)
-    font = ImageFont.truetype(FONT, int(cel_y * exp))
+    font = ImageFont.truetype(fontpath, int(cel_y * exp))
     for aa_row, r in zip(aa, range(len(aa))):
         for aa_str, c in zip(aa_row, range(len(aa_row))):
             if aa_str:
@@ -91,9 +92,10 @@ def txt2aa_img(
     fontpath: str,
     fontsize: int,
     color: str,
+    aa_font: str,
     numy: int,
     exp: float,
 ) -> Image.Image:
     img = txt2img(txt, fontpath, fontsize)
     aa = img2aa(img, numy)
-    return aa2img(aa, img.size, exp, color)
+    return aa2img(aa, img.size, aa_font, exp, color)
