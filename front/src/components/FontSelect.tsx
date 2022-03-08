@@ -9,25 +9,23 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-const FontSelect: FC<Props> = ({ value, onChange }) => {
-  return (
-    <TextField
-      select
-      fullWidth
-      variant="standard"
-      value={value}
-      onChange={e => onChange(e.target.value)}
-    >
-      {FONT_NAMES.map((fontName, i) => (
-        <MenuItem
-          key={i}
-          value={fontName}
-        >
-          {fontName}
-        </MenuItem>
-      ))}
-    </TextField>
-  );
-};
+const FontSelect: FC<Props> = ({ value, onChange }) => (
+  <TextField
+    select
+    fullWidth
+    variant="standard"
+    value={value}
+    onChange={e => onChange(e.target.value)}
+  >
+    {FONT_NAMES.map((fontName, i) => (
+      <MenuItem
+        key={i}
+        value={fontName}
+      >
+        {fontName}
+      </MenuItem>
+    ))}
+  </TextField>
+);
 
 export default FontSelect;

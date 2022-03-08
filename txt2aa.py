@@ -82,9 +82,10 @@ def txt2aa(
     fontpath: str,
     fontsize: int,
     numy: int,
-) -> list[list[str]]:
+) -> str:
     img = txt2img(txt, fontpath, fontsize)
-    return img2aa(img, numy)
+    aa = img2aa(img, numy)
+    return "\n".join(["".join(row) for row in aa])
 
 
 def txt2aa_img(

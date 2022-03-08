@@ -5,7 +5,7 @@ from flask import Flask, make_response, render_template, request, send_file
 from flask.wrappers import Response
 from PIL import Image
 
-from txt2aa import txt2aa_img, txt2img
+from txt2aa import txt2aa, txt2aa_img, txt2img
 from utils import is_valid_font, isfloat, isint, resource_path
 
 FONT = "msgothic.ttc"
@@ -45,6 +45,26 @@ def get_txt2img() -> Response:
     img_io.seek(0)
 
     return make_response(send_file(img_io, mimetype="image/png"))
+
+
+@server.route("/txt2aa")
+def get_txt2aa() -> str:
+    txt = request.args.get("txt", "")
+
+    fnt_arg = request.args.get("fnt", "")
+    fs_arg = request.args.get("fs", "")
+    ny_arg = request.args.get("ny", "")
+
+    fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
+    fontsize = int(fs_arg) if isint(fs_arg) else 200
+    numy = int(ny_arg) if isint(ny_arg) else 20
+
+    try:
+        aa = txt2aa(txt, fontpath, fontsize, numy)
+    except:
+        aa = ""
+
+    return aa
 
 
 @server.route("/txt2aa/img")
