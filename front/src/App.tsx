@@ -1,13 +1,14 @@
 import { FC, useState } from 'react';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import TxtDownloadIcon from '@mui/icons-material/FormatColorTextRounded';
 
 import ConditionArea from './components/ConditionArea';
 import ImgFrame from './components/ImgFrame';
-import Condition, { initialCondition, fontMap } from './models/condition';
+import Condition, { initialCondition, getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
 
 const App: FC = () => {
   const [condition, setCondition] = useState<Condition>(initialCondition);
-  const { txt, font, fontSize, color, aaFont, numy, exp } = condition;
 
   return (
     <Box sx={{
@@ -25,14 +26,40 @@ const App: FC = () => {
         condition={condition}
         setCondition={setCondition}
       />
-      <ImgFrame
-        alt="txt2img"
-        src={`/txt2img?txt=${txt}&fnt=${fontMap(font)}&fs=${fontSize}&clr=${color.slice(1)}`}
-      />
-      <ImgFrame
-        alt="txt2aa_img"
-        src={`/txt2aa/img?txt=${txt}&fnt=${fontMap(font)}&fs=${fontSize}&clr=${color.slice(1)}&afnt=${fontMap(aaFont)}&ny=${numy}&exp=${exp}`}
-      />
+      <Box sx={{
+        height: '100%',
+        width: '100%',
+        mt: 2,
+      }}>
+        <ImgFrame
+          alt="txt2img"
+          src={getTxt2imgUrl(condition)}
+          download="before.png"
+        />
+      </Box>
+      <Box sx={{
+        height: '100%',
+        width: '100%',
+        mt: 2,
+        position: 'relative',
+      }}>
+        <ImgFrame
+          alt="txt2aa"
+          src={getTxt2aaimgUrl(condition)}
+          download="after.png"
+        />
+        <IconButton
+          href={getTxt2aaUrl(condition)}
+          download="aa.txt"
+          sx={{
+            position: 'absolute',
+            left: 3,
+            bottom: 3,
+          }}
+        >
+          <TxtDownloadIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };

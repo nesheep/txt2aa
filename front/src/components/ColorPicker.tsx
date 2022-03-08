@@ -74,4 +74,4 @@ const ColorPicker: FC<Props> = ({ color, onAccept }) => {
   );
 };
 
-export default ColorPicker
+export default ColorPicker;
