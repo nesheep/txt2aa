@@ -1,14 +1,15 @@
-import { FC, useState } from 'react';
+import { FC, useContext } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import TxtDownloadIcon from '@mui/icons-material/FormatColorTextRounded';
 
 import ConditionArea from './components/ConditionArea';
 import ImgFrame from './components/ImgFrame';
-import Condition, { initialCondition, getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
+import { getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
+import { ConditionContext } from './state/contexts';
 
 const App: FC = () => {
-  const [condition, setCondition] = useState<Condition>(initialCondition);
+  const { condition } = useContext(ConditionContext);
 
   return (
     <Box sx={{
@@ -22,10 +23,7 @@ const App: FC = () => {
       flexDirection: 'column',
       alignItems: 'center',
     }}>
-      <ConditionArea
-        condition={condition}
-        setCondition={setCondition}
-      />
+      <ConditionArea />
       <Box sx={{
         height: '100%',
         width: '100%',
