@@ -1,9 +1,10 @@
 from io import BytesIO
 from pathlib import Path
 
-from flask import Flask, make_response, render_template, request, send_file
+from flask import Flask, abort, jsonify, make_response, render_template, request, send_file
 from flask.wrappers import Response
 from PIL import Image
+from webview import OPEN_DIALOG, Window, windows
 
 from txt2aa import txt2aa, txt2aa_img, txt2img
 from utils import is_valid_font, isfloat, isint, resource_path
@@ -96,3 +97,14 @@ def get_txt2aa_img() -> Response:
     img_io.seek(0)
 
     return make_response(send_file(img_io, mimetype="image/png"))
+
+
+@server.route("/open/font")
+def open_font() -> Response:
+    window = windows[0]
+    if isinstance(window, Window):
+        file_types = "Font files (*.ttf;*.ttc;*.otf;*.otc;*.fon)",
+        files = window.create_file_dialog(OPEN_DIALOG, file_types=file_types)
+        if isinstance(files, tuple):
+            return jsonify({"font": files[0]})
+    abort(400)

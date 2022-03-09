@@ -6,3 +6,8 @@ export const ConditionContext = createContext({} as {
   condition: Condition;
   setCondition: Dispatch<SetStateAction<Condition>>;
 });
+
+export const FontNamesContext = createContext({} as {
+  fontNames: string[];
+  setFontNames: Dispatch<SetStateAction<string[]>>;
+});
