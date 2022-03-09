@@ -32,8 +32,8 @@ export const getTxt2imgUrl = (condition: Condition): string => {
 };
 
 export const getTxt2aaUrl = (condition: Condition): string => {
-  const { txt, font, fontSize, numy } = condition;
-  return `/txt2aa?txt=${txt}&fnt=${fontMap(font)}&fs=${fontSize}&ny=${numy}`;
+  const { txt, font, fontSize, aaFont, numy } = condition;
+  return `/txt2aa?txt=${txt}&fnt=${fontMap(font)}&fs=${fontSize}&afnt=${fontMap(aaFont)}&ny=${numy}`;
 };
 
 export const getTxt2aaimgUrl = (condition: Condition): string => {
