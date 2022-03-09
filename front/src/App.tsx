@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import { grey } from '@mui/material/colors';
 import TxtDownloadIcon from '@mui/icons-material/FormatColorTextRounded';
 
 import ConditionArea from './components/ConditionArea';
@@ -46,17 +47,20 @@ const App: FC = () => {
           src={getTxt2aaimgUrl(condition)}
           download="after.png"
         />
-        <IconButton
-          href={getTxt2aaUrl(condition)}
-          download="aa.txt"
-          sx={{
-            position: 'absolute',
-            left: 3,
-            bottom: 3,
-          }}
-        >
-          <TxtDownloadIcon />
-        </IconButton>
+        <Box sx={{
+          position: 'absolute',
+          left: 5,
+          bottom: 5,
+          bgcolor: grey.A200,
+          borderRadius: '100%',
+        }}>
+          <IconButton
+            href={getTxt2aaUrl(condition)}
+            download="aa.txt"
+          >
+            <TxtDownloadIcon />
+          </IconButton>
+        </Box>
       </Box>
     </Box>
   );

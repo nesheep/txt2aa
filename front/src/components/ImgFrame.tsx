@@ -1,8 +1,12 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import ToggleButton from '@mui/material/ToggleButton';
+import { common, grey } from '@mui/material/colors';
 import DownloadIcon from '@mui/icons-material/DownloadRounded';
-import { common } from '@mui/material/colors';
+import FitIcon from '@mui/icons-material/FitScreenRounded';
+
+import ColorSelectButtons from './ColorSelectButtons';
 
 type Props = {
   alt: string;
@@ -13,6 +17,8 @@ type Props = {
 const ImgFrame: FC<Props> = ({ alt, src, download }) => {
   const container = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(100);
+  const [fit, setFit] = useState(false);
+  const [bgcolor, setBgcolor] = useState<string>(common.white);
 
   const resizeListener = () => {
     if (!container.current) return;
@@ -42,23 +48,52 @@ const ImgFrame: FC<Props> = ({ alt, src, download }) => {
         style={{
           height,
           width: '100%',
-          backgroundColor: common.white,
+          backgroundColor: bgcolor,
           borderRadius: 10,
           display: 'block',
-          objectFit: 'scale-down',
+          objectFit: fit ? 'scale-down' : 'none',
         }}
       />
-      <IconButton
-        href={src}
-        download={download}
+      <Box sx={{
+        position: 'absolute',
+        left: 5,
+        top: 5,
+        bgcolor: grey.A200,
+        borderRadius: 1,
+      }}>
+        <ToggleButton
+          value="fit"
+          size="small"
+          selected={fit}
+          onChange={() => setFit(prev => !prev)}
+        >
+          <FitIcon fontSize="small" />
+        </ToggleButton>
+      </Box>
+      <ColorSelectButtons
+        value={bgcolor}
+        values={[common.white, grey.A400, common.black]}
+        onChange={value => setBgcolor(value)}
         sx={{
           position: 'absolute',
-          right: 3,
-          bottom: 3,
+          right: 5,
+          top: 5,
         }}
-      >
-        <DownloadIcon />
-      </IconButton>
+      />
+      <Box sx={{
+        position: 'absolute',
+        right: 5,
+        bottom: 5,
+        bgcolor: grey.A200,
+        borderRadius: '100%',
+      }}>
+        <IconButton
+          href={src}
+          download={download}
+        >
+          <DownloadIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };
