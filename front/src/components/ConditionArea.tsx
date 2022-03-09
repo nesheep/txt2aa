@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
@@ -7,14 +7,10 @@ import TextField from '@mui/material/TextField';
 import ColorPicker from './ColorPicker';
 import ConditionItem from './ConditionItem';
 import FontSelect from './FontSelect';
-import Condition from '../models/condition';
+import { ConditionContext } from '../state/contexts';
 
-type Props = {
-  condition: Condition;
-  setCondition: Dispatch<SetStateAction<Condition>>;
-};
-
-const ConditionsArea: FC<Props> = ({ condition, setCondition }) => {
+const ConditionsArea: FC = () => {
+  const { condition, setCondition } = useContext(ConditionContext);
   const { txt, font, fontSize, color, aaFont, numy, exp } = condition;
 
   return (

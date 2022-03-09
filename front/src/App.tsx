@@ -1,14 +1,16 @@
-import { FC, useState } from 'react';
+import { FC, useContext } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import { grey } from '@mui/material/colors';
 import TxtDownloadIcon from '@mui/icons-material/FormatColorTextRounded';
 
 import ConditionArea from './components/ConditionArea';
 import ImgFrame from './components/ImgFrame';
-import Condition, { initialCondition, getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
+import { getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
+import { ConditionContext } from './state/contexts';
 
 const App: FC = () => {
-  const [condition, setCondition] = useState<Condition>(initialCondition);
+  const { condition } = useContext(ConditionContext);
 
   return (
     <Box sx={{
@@ -22,10 +24,7 @@ const App: FC = () => {
       flexDirection: 'column',
       alignItems: 'center',
     }}>
-      <ConditionArea
-        condition={condition}
-        setCondition={setCondition}
-      />
+      <ConditionArea />
       <Box sx={{
         height: '100%',
         width: '100%',
@@ -48,17 +47,20 @@ const App: FC = () => {
           src={getTxt2aaimgUrl(condition)}
           download="after.png"
         />
-        <IconButton
-          href={getTxt2aaUrl(condition)}
-          download="aa.txt"
-          sx={{
-            position: 'absolute',
-            left: 3,
-            bottom: 3,
-          }}
-        >
-          <TxtDownloadIcon />
-        </IconButton>
+        <Box sx={{
+          position: 'absolute',
+          left: 5,
+          bottom: 5,
+          bgcolor: grey.A200,
+          borderRadius: '100%',
+        }}>
+          <IconButton
+            href={getTxt2aaUrl(condition)}
+            download="aa.txt"
+          >
+            <TxtDownloadIcon />
+          </IconButton>
+        </Box>
       </Box>
     </Box>
   );

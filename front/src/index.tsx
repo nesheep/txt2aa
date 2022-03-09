@@ -13,13 +13,16 @@ import '@fontsource/noto-sans-jp/700.css';
 
 import './index.css';
 import App from './App';
+import AppProvider from './state/providers/AppProvider';
 import { theme } from './theme';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <AppProvider>
+        <App />
+      </AppProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
