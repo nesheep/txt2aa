@@ -3,14 +3,16 @@ from __future__ import annotations
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-FONT = "msgothic.ttc"
 STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
 
 
-def __make_map(str_list: list[str]) -> np.ndarray:
+def __make_map(
+    fontpath: str,
+    str_list: list[str],
+) -> np.ndarray:
     l = []
     fontsize = 20
-    font = ImageFont.truetype(FONT, fontsize)
+    font = ImageFont.truetype(fontpath, fontsize)
     for i in str_list:
         img = Image.new("L", (fontsize * 2, fontsize * 2), "white")
         draw = ImageDraw.Draw(img)
@@ -45,13 +47,14 @@ def txt2img(
 def img2aa(
     img: Image.Image,
     numy: int,
+    fontpath: str,
     str_list: list[str] = list(STRS),
 ) -> list[list[str]]:
     img_x, img_y = img.size
     gray_img = img.convert("L")
     gray_img = gray_img.resize((int(img_x * numy / img_y), numy))
     img_arr = np.asarray(gray_img)
-    chr_map = __make_map(str_list)
+    chr_map = __make_map(fontpath, str_list)
     aa = chr_map[img_arr]
     return aa.tolist()
 
@@ -81,10 +84,11 @@ def txt2aa(
     txt: str,
     fontpath: str,
     fontsize: int,
+    aa_font: str,
     numy: int,
 ) -> str:
     img = txt2img(txt, fontpath, fontsize)
-    aa = img2aa(img, numy)
+    aa = img2aa(img, numy, aa_font)
     return "\n".join(["".join(row) for row in aa])
 
 
@@ -98,5 +102,5 @@ def txt2aa_img(
     exp: float,
 ) -> Image.Image:
     img = txt2img(txt, fontpath, fontsize)
-    aa = img2aa(img, numy)
+    aa = img2aa(img, numy, aa_font)
     return aa2img(aa, img.size, aa_font, exp, color)
