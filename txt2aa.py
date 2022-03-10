@@ -3,8 +3,6 @@ from __future__ import annotations
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
-
 
 def __make_map(
     fontpath: str,
@@ -48,7 +46,7 @@ def img2aa(
     img: Image.Image,
     numy: int,
     fontpath: str,
-    str_list: list[str] = list(STRS),
+    str_list: list[str],
 ) -> list[list[str]]:
     img_x, img_y = img.size
     gray_img = img.convert("L")
@@ -86,9 +84,10 @@ def txt2aa(
     fontsize: int,
     aa_font: str,
     numy: int,
+    str_list: list[str],
 ) -> str:
     img = txt2img(txt, fontpath, fontsize)
-    aa = img2aa(img, numy, aa_font)
+    aa = img2aa(img, numy, aa_font, str_list)
     return "\n".join(["".join(row) for row in aa])
 
 
@@ -100,7 +99,8 @@ def txt2aa_img(
     aa_font: str,
     numy: int,
     exp: float,
+    str_list: list[str],
 ) -> Image.Image:
     img = txt2img(txt, fontpath, fontsize)
-    aa = img2aa(img, numy, aa_font)
+    aa = img2aa(img, numy, aa_font, str_list)
     return aa2img(aa, img.size, aa_font, exp, color)

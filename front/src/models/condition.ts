@@ -6,6 +6,7 @@ type Condition = {
   aaFont: string;
   numy: number;
   exp: number;
+  aaStrs: string;
 };
 
 export const FONT_NAMES: string[] = [
@@ -43,18 +44,19 @@ export const getTxt2imgUrl = (condition: Condition): string => {
 };
 
 export const getTxt2aaUrl = (condition: Condition): string => {
-  const { txt, font, fontSize, aaFont, numy } = condition;
+  const { txt, font, fontSize, aaFont, numy, aaStrs } = condition;
   return buildUrl('/txt2aa', [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
     { name: 'afnt', value: fontMap(aaFont) },
     { name: 'ny', value: String(numy) },
+    { name: 'astr', value: aaStrs },
   ]);
 };
 
 export const getTxt2aaimgUrl = (condition: Condition): string => {
-  const { txt, font, fontSize, color, aaFont, numy, exp } = condition;
+  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs } = condition;
   return buildUrl('/txt2aa/img', [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
@@ -63,6 +65,7 @@ export const getTxt2aaimgUrl = (condition: Condition): string => {
     { name: 'afnt', value: fontMap(aaFont) },
     { name: 'ny', value: String(numy) },
     { name: 'exp', value: String(exp) },
+    { name: 'astr', value: aaStrs },
   ]);
 };
 
@@ -74,6 +77,7 @@ export const initialCondition: Condition = {
   aaFont: 'MS ゴシック 標準',
   numy: 20,
   exp: 1,
+  aaStrs: `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'"!?#&()~^|@;:.,[]{}<>_0123456789`,
 };
 
 export default Condition;
