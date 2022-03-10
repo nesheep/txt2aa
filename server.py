@@ -10,6 +10,7 @@ from txt2aa import txt2aa, txt2aa_img, txt2img
 from utils import is_valid_font, isfloat, isint, resource_path
 
 FONT = "msgothic.ttc"
+STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
 EMPTY_IMG = Image.new("RGBA", (100, 100), (255, 255, 255, 0))
 
 html_folder = resource_path(Path("front/build"))
@@ -51,6 +52,7 @@ def get_txt2img() -> Response:
 @server.route("/txt2aa")
 def get_txt2aa() -> str:
     txt = request.args.get("txt", "")
+    aa_strs = request.args.get("astr", STRS)
 
     fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
@@ -63,7 +65,7 @@ def get_txt2aa() -> str:
     numy = int(ny_arg) if isint(ny_arg) else 20
 
     try:
-        aa = txt2aa(txt, fontpath, fontsize, aa_font, numy)
+        aa = txt2aa(txt, fontpath, fontsize, aa_font, numy, list(aa_strs))
     except:
         aa = ""
 
@@ -74,6 +76,7 @@ def get_txt2aa() -> str:
 def get_txt2aa_img() -> Response:
     txt = request.args.get("txt", "")
     color = request.args.get("clr", "black")
+    aa_strs = request.args.get("astr", STRS)
 
     fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
@@ -88,7 +91,7 @@ def get_txt2aa_img() -> Response:
     exp = float(exp_arg) if isfloat(exp_arg) else 1.0
 
     try:
-        img = txt2aa_img(txt, fontpath, fontsize, color, aa_font, numy, exp)
+        img = txt2aa_img(txt, fontpath, fontsize, color, aa_font, numy, exp, list(aa_strs))
     except:
         img = EMPTY_IMG
 

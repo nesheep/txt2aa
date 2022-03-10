@@ -4,10 +4,11 @@ import Typography from '@mui/material/Typography';
 
 type Props = {
   label: string;
-  children: ReactNode;
+  fullwidth?: boolean;
+  children?: ReactNode;
 };
 
-const ConditionItem: FC<Props> = ({ label, children }) => (
+const ConditionItem: FC<Props> = ({ label, fullwidth, children }) => (
   <>
     <Grid
       item
@@ -21,10 +22,10 @@ const ConditionItem: FC<Props> = ({ label, children }) => (
     </Grid>
     <Grid
       item
-      xs={4}
+      xs={fullwidth ? 10 : 4}
       display="flex"
       alignItems="center"
-      sx={{pr: 4}}
+      sx={{ pr: 4 }}
     >
       {children}
     </Grid>

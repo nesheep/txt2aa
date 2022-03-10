@@ -11,7 +11,7 @@ import { ConditionContext } from '../state/contexts';
 
 const ConditionsArea: FC = () => {
   const { condition, setCondition } = useContext(ConditionContext);
-  const { txt, font, fontSize, color, aaFont, numy, exp } = condition;
+  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs } = condition;
 
   return (
     <Box sx={{
@@ -25,7 +25,9 @@ const ConditionsArea: FC = () => {
         <TextField
           autoFocus
           fullWidth
+          hiddenLabel
           variant="filled"
+          size="small"
           color="success"
           value={txt}
           onChange={e => setCondition(prev => ({ ...prev, txt: e.target.value }))}
@@ -79,6 +81,20 @@ const ConditionsArea: FC = () => {
               valueLabelDisplay="auto"
               value={exp}
               onChange={(_, value) => setCondition(prev => ({ ...prev, exp: Number(value) }))}
+            />
+          </ConditionItem>
+          <ConditionItem
+            label="AA使用文字"
+            fullwidth
+          >
+            <TextField
+              fullWidth
+              hiddenLabel
+              variant="filled"
+              size="small"
+              color="success"
+              value={aaStrs}
+              onChange={e => setCondition(prev => ({ ...prev, aaStrs: e.target.value }))}
             />
           </ConditionItem>
         </Grid>
