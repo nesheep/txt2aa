@@ -28,7 +28,7 @@ def index() -> str:
 @server.route("/txt2img")
 def get_txt2img() -> Response:
     txt = request.args.get("txt", "")
-    color = f"#{request.args.get('clr', '000000')}"
+    color = request.args.get("clr", "black")
 
     fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
@@ -73,7 +73,7 @@ def get_txt2aa() -> str:
 @server.route("/txt2aa/img")
 def get_txt2aa_img() -> Response:
     txt = request.args.get("txt", "")
-    color = f"#{request.args.get('clr', '000000')}"
+    color = request.args.get("clr", "black")
 
     fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")

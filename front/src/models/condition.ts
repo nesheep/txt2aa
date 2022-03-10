@@ -26,19 +26,44 @@ export const fontMap = (fontName: string): string => {
   return fontName;
 };
 
+const buildUrl = (url: string, params: { name: string, value: string }[]): string => {
+  const u = new URL(url, window.origin);
+  params.forEach(({ name, value }) => u.searchParams.set(name, value));
+  return u.toString();
+};
+
 export const getTxt2imgUrl = (condition: Condition): string => {
   const { txt, font, fontSize, color } = condition;
-  return `/txt2img?txt=${txt}&fnt=${fontMap(font)}&fs=${fontSize}&clr=${color.slice(1)}`;
+  return buildUrl('/txt2img', [
+    { name: 'txt', value: txt },
+    { name: 'fnt', value: fontMap(font) },
+    { name: 'fs', value: String(fontSize) },
+    { name: 'clr', value: color },
+  ]);
 };
 
 export const getTxt2aaUrl = (condition: Condition): string => {
   const { txt, font, fontSize, aaFont, numy } = condition;
-  return `/txt2aa?txt=${txt}&fnt=${fontMap(font)}&fs=${fontSize}&afnt=${fontMap(aaFont)}&ny=${numy}`;
+  return buildUrl('/txt2aa', [
+    { name: 'txt', value: txt },
+    { name: 'fnt', value: fontMap(font) },
+    { name: 'fs', value: String(fontSize) },
+    { name: 'afnt', value: fontMap(aaFont) },
+    { name: 'ny', value: String(numy) },
+  ]);
 };
 
 export const getTxt2aaimgUrl = (condition: Condition): string => {
   const { txt, font, fontSize, color, aaFont, numy, exp } = condition;
-  return `/txt2aa/img?txt=${txt}&fnt=${fontMap(font)}&fs=${fontSize}&clr=${color.slice(1)}&afnt=${fontMap(aaFont)}&ny=${numy}&exp=${exp}`;
+  return buildUrl('/txt2aa/img', [
+    { name: 'txt', value: txt },
+    { name: 'fnt', value: fontMap(font) },
+    { name: 'fs', value: String(fontSize) },
+    { name: 'clr', value: color },
+    { name: 'afnt', value: fontMap(aaFont) },
+    { name: 'ny', value: String(numy) },
+    { name: 'exp', value: String(exp) },
+  ]);
 };
 
 export const initialCondition: Condition = {
