@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import TextField from '@mui/material/TextField';
 
+import AaStrsInput from './AaStrsInput';
 import ColorPicker from './ColorPicker';
 import ConditionItem from './ConditionItem';
 import FontSelect from './FontSelect';
@@ -87,14 +88,9 @@ const ConditionsArea: FC = () => {
             label="AA使用文字"
             fullwidth
           >
-            <TextField
-              fullWidth
-              hiddenLabel
-              variant="filled"
-              size="small"
-              color="success"
+            <AaStrsInput
               value={aaStrs}
-              onChange={e => setCondition(prev => ({ ...prev, aaStrs: e.target.value }))}
+              onChange={value => setCondition(prev => ({ ...prev, aaStrs: value }))}
             />
           </ConditionItem>
         </Grid>
