@@ -8,3 +8,4 @@ call yarn build
 
 cd ..
 call pipenv run build
+copy dll\fribidi.dll dist\txt2aa\fribidi.dll

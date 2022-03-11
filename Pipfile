@@ -19,4 +19,4 @@ python_version = "3.8"
 
 [scripts]
 start = "python main.py"
-build = "pyinstaller --onefile --clean main.spec"
+build = "pyinstaller --onefile --clean --distpath ./dist/txt2aa main.spec"
