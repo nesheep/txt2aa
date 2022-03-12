@@ -27,6 +27,13 @@ const FontSelect: FC<Props> = ({ value, onChange }) => {
         value={value}
         onChange={e => onChange(e.target.value)}
         sx={{ mr: 2.5 }}
+        SelectProps={{
+          MenuProps: {
+            PaperProps: {
+              sx: { maxHeight: 500 },
+            },
+          },
+        }}
       >
         {fontNames.map((fontName, i) => (
           <MenuItem

@@ -106,7 +106,7 @@ def get_txt2aa_img() -> Response:
 def open_font() -> Response:
     window = windows[0]
     if isinstance(window, Window):
-        file_types = "Font files (*.ttf;*.ttc;*.otf;*.otc;*.fon)",
+        file_types = "Font files (*.ttf;*.ttc;*.otf;*.otc)",
         files = window.create_file_dialog(OPEN_DIALOG, file_types=file_types)
         if isinstance(files, tuple):
             return jsonify({"font": files[0]})
