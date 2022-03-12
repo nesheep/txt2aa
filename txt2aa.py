@@ -34,11 +34,12 @@ def txt2img(
     img = Image.new("RGBA", (1, 1))
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(fontpath, fontsize)
-    x, y = draw.textsize(txt, font)
-    x, y = int(x + fontsize * 0.2), int(y + fontsize * 0.2)
-    img = Image.new("RGBA", (x, y), (255, 255, 255, 0))
+    ax, ay, bx, by = draw.textbbox((0, 0), txt, font)
+    w, h = bx - ax, by - ay
+    p = fontsize * 0.3
+    img = Image.new("RGBA", (int(w + p * 2), int(h + p * 2)), (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
-    draw.text((x / 2, y / 2), txt, color, font, "mm")
+    draw.text((p - ax, p - ay), txt, color, font)
     return img
 
 
