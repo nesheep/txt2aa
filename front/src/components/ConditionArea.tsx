@@ -37,6 +37,8 @@ const ConditionsArea: FC = () => {
           container
           spacing={1}
           mt={1.5}
+          position="relative"
+          left={16}
         >
           <ConditionItem label="フォント">
             <FontSelect
