@@ -49,7 +49,7 @@ const FontSelect: FC<Props> = ({ value, onChange }) => {
         onClick={async () => {
           try {
             const font = (await (await fetch('/open/font')).json()).font;
-            setFontNames(prev => [...prev, font]);
+            setFontNames(prev => prev.includes(font) ? prev : [...prev, font]);
             onChange(font);
           } catch (error) {
             if (error instanceof Error) console.error(error.message);

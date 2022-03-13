@@ -49,9 +49,9 @@ def img2aa(
     fontpath: str,
     str_list: list[str],
 ) -> list[list[str]]:
-    img_x, img_y = img.size
+    img_w, img_h = img.size
     gray_img = img.convert("L")
-    gray_img = gray_img.resize((int(img_x * numy / img_y), numy))
+    gray_img = gray_img.resize((int(img_w * numy / img_h), numy))
     img_arr = np.asarray(gray_img)
     chr_map = __make_map(fontpath, str_list)
     aa = chr_map[img_arr]
@@ -67,14 +67,14 @@ def aa2img(
 ) -> Image.Image:
     img = Image.new("RGBA", size, (255, 255, 255, 0))
     draw = ImageDraw.Draw(img)
-    x, y = size
-    cel_x = x / max([len(r) for r in aa])
-    cel_y = y / len(aa)
-    font = ImageFont.truetype(fontpath, int(cel_y * exp))
+    w, h = size
+    cel_w = w / max([len(r) for r in aa])
+    cel_h = h / len(aa)
+    font = ImageFont.truetype(fontpath, int(cel_h * exp))
     for aa_row, r in zip(aa, range(len(aa))):
         for aa_str, c in zip(aa_row, range(len(aa_row))):
             if aa_str:
-                xy = (cel_x * (c + 0.5), cel_y * (r + 0.5))
+                xy = (cel_w * (c + 0.5), cel_h * (r + 0.5))
                 draw.text(xy, aa_str, color, font, "mm")
     return img
 
