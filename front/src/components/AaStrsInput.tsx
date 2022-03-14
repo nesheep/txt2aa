@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import FilledInput from '@mui/material/FilledInput';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
 
 type Props = {
   value: string;
@@ -35,10 +35,9 @@ const AsStrsInput: FC<Props> = ({ value, onChange }) => {
       display: 'flex',
       alignItems: 'center',
     }}>
-      <TextField
+      <FilledInput
         fullWidth
         hiddenLabel
-        variant="filled"
         size="small"
         color="success"
         value={value}

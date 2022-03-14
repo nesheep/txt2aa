@@ -1,16 +1,18 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import Box from '@mui/material/Box';
+import FilledInput from '@mui/material/FilledInput';
 import Grid from '@mui/material/Grid';
-import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
 
 import AaStrsInput from './AaStrsInput';
 import ColorPicker from './ColorPicker';
 import ConditionItem from './ConditionItem';
 import FontSelect from './FontSelect';
+import SliderInput from './SliderInput';
+import ToggleInputType from './ToggleInputType';
 import { ConditionContext } from '../state/contexts';
 
 const ConditionsArea: FC = () => {
+  const [isSlider, setIsSlider] = useState(true);
   const { condition, setCondition } = useContext(ConditionContext);
   const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs } = condition;
 
@@ -23,11 +25,10 @@ const ConditionsArea: FC = () => {
         p: 2,
         bgcolor: '#95ca7f',
       }}>
-        <TextField
+        <FilledInput
           autoFocus
           fullWidth
           hiddenLabel
-          variant="filled"
           size="small"
           color="success"
           value={txt}
@@ -36,7 +37,7 @@ const ConditionsArea: FC = () => {
         <Grid
           container
           spacing={1}
-          mt={1.5}
+          mt={1}
           position="relative"
           left={16}
         >
@@ -46,28 +47,30 @@ const ConditionsArea: FC = () => {
               onChange={value => setCondition(prev => ({ ...prev, font: value }))}
             />
           </ConditionItem>
+          <ConditionItem label="フォントサイズ">
+            <SliderInput
+              isSlider={isSlider}
+              min={20}
+              max={400}
+              end="px"
+              value={fontSize}
+              onChange={value => setCondition(prev => ({ ...prev, fontSize: value }))}
+            />
+          </ConditionItem>
           <ConditionItem label="AAフォント">
             <FontSelect
               value={aaFont}
               onChange={value => setCondition(prev => ({ ...prev, aaFont: value }))}
             />
           </ConditionItem>
-          <ConditionItem label="フォントサイズ">
-            <Slider
-              min={20}
-              max={400}
-              valueLabelDisplay="auto"
-              value={fontSize}
-              onChange={(_, value) => setCondition(prev => ({ ...prev, fontSize: Number(value) }))}
-            />
-          </ConditionItem>
           <ConditionItem label="AA文字数（縦）">
-            <Slider
+            <SliderInput
+              isSlider={isSlider}
               min={8}
               max={80}
-              valueLabelDisplay="auto"
+              end="字"
               value={numy}
-              onChange={(_, value) => setCondition(prev => ({ ...prev, numy: Number(value) }))}
+              onChange={value => setCondition(prev => ({ ...prev, numy: value }))}
             />
           </ConditionItem>
           <ConditionItem label="色">
@@ -77,24 +80,39 @@ const ConditionsArea: FC = () => {
             />
           </ConditionItem>
           <ConditionItem label="AAフォント倍率">
-            <Slider
+            <SliderInput
+              isSlider={isSlider}
               min={0.5}
               max={4}
               step={0.1}
-              valueLabelDisplay="auto"
+              end="倍"
               value={exp}
-              onChange={(_, value) => setCondition(prev => ({ ...prev, exp: Number(value) }))}
+              onChange={value => setCondition(prev => ({ ...prev, exp: value }))}
             />
           </ConditionItem>
           <ConditionItem
             label="AA使用文字"
-            fullwidth
+            xs={10.5}
+            pr={1.5}
           >
             <AaStrsInput
               value={aaStrs}
               onChange={value => setCondition(prev => ({ ...prev, aaStrs: value }))}
             />
           </ConditionItem>
+          <Grid
+            item
+            xs={1.5}
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{ pr: 4 }}
+          >
+            <ToggleInputType
+              isSlider={isSlider}
+              onClick={() => setIsSlider(prev => !prev)}
+            />
+          </Grid>
         </Grid>
       </Box>
     </Box>
