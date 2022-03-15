@@ -92,27 +92,18 @@ const ConditionsArea: FC = () => {
           </ConditionItem>
           <ConditionItem
             label="AA使用文字"
-            xs={10.5}
-            pr={1.5}
+            xs={12}
           >
             <AaStrsInput
               value={aaStrs}
               onChange={value => setCondition(prev => ({ ...prev, aaStrs: value }))}
+              sx={{ mr: 2.5 }}
             />
-          </ConditionItem>
-          <Grid
-            item
-            xs={1.5}
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-end"
-            sx={{ pr: 4 }}
-          >
             <ToggleInputType
               isSlider={isSlider}
               onClick={() => setIsSlider(prev => !prev)}
             />
-          </Grid>
+          </ConditionItem>
         </Grid>
       </Box>
     </Box>
