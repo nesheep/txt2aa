@@ -4,13 +4,15 @@ import Button from '@mui/material/Button';
 import FilledInput from '@mui/material/FilledInput';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { SxProps, Theme } from '@mui/material/styles';
 
 type Props = {
   value: string;
   onChange: (value: string) => void;
+  sx?: SxProps<Theme>;
 };
 
-const AsStrsInput: FC<Props> = ({ value, onChange }) => {
+const AsStrsInput: FC<Props> = ({ value, onChange, sx }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
 
@@ -34,6 +36,7 @@ const AsStrsInput: FC<Props> = ({ value, onChange }) => {
       width: '100%',
       display: 'flex',
       alignItems: 'center',
+      ...sx,
     }}>
       <FilledInput
         fullWidth
