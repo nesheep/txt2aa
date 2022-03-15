@@ -28,14 +28,15 @@ def index() -> str:
 
 @server.route("/txt2img")
 def get_txt2img() -> Response:
-    txt = request.args.get("txt", "")
-    color = request.args.get("clr", "black")
-
+    txt_arg = request.args.get("txt", "")
     fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
+    clr_arg = request.args.get("clr", "black")
 
+    txt = txt_arg
     fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
     fontsize = int(fs_arg) if isint(fs_arg) else 200
+    color = clr_arg
 
     try:
         img = txt2img(txt, fontpath, fontsize, color)
@@ -51,47 +52,48 @@ def get_txt2img() -> Response:
 
 @server.route("/txt2aa")
 def get_txt2aa() -> str:
-    txt = request.args.get("txt", "")
-    aa_strs = request.args.get("astr", STRS)
-
+    txt_arg = request.args.get("txt", "")
     fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
     afnt_arg = request.args.get("afnt", "")
     ny_arg = request.args.get("ny", "")
+    astr_arg = request.args.get("astr", STRS)
 
+    txt = txt_arg
     fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
     fontsize = int(fs_arg) if isint(fs_arg) else 200
     aa_font = afnt_arg if is_valid_font(afnt_arg) else FONT
     numy = int(ny_arg) if isint(ny_arg) else 20
+    str_list = list(astr_arg)
 
     try:
-        aa = txt2aa(txt, fontpath, fontsize, aa_font, numy, list(aa_strs))
+        return txt2aa(txt, fontpath, fontsize, aa_font, numy, str_list)
     except:
-        aa = ""
-
-    return aa
+        return ""
 
 
 @server.route("/txt2aa/img")
 def get_txt2aa_img() -> Response:
-    txt = request.args.get("txt", "")
-    color = request.args.get("clr", "black")
-    aa_strs = request.args.get("astr", STRS)
-
+    txt_arg = request.args.get("txt", "")
     fnt_arg = request.args.get("fnt", "")
     fs_arg = request.args.get("fs", "")
+    clr_arg = request.args.get("clr", "black")
     afnt_arg = request.args.get("afnt", "")
     ny_arg = request.args.get("ny", "")
     exp_arg = request.args.get("exp", "")
+    astr_arg = request.args.get("astr", STRS)
 
+    txt = txt_arg
     fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
     fontsize = int(fs_arg) if isint(fs_arg) else 200
+    color = clr_arg
     aa_font = afnt_arg if is_valid_font(afnt_arg) else FONT
     numy = int(ny_arg) if isint(ny_arg) else 20
     exp = float(exp_arg) if isfloat(exp_arg) else 1.0
+    str_list = list(astr_arg)
 
     try:
-        img = txt2aa_img(txt, fontpath, fontsize, color, aa_font, numy, exp, list(aa_strs))
+        img = txt2aa_img(txt, fontpath, fontsize, color, aa_font, numy, exp, str_list)
     except:
         img = EMPTY_IMG
 
