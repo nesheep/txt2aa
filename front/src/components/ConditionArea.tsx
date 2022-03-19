@@ -4,6 +4,7 @@ import FilledInput from '@mui/material/FilledInput';
 import Grid from '@mui/material/Grid';
 
 import AaStrsInput from './AaStrsInput';
+import BgButton from './BgButton';
 import ColorPicker from './ColorPicker';
 import ConditionItem from './ConditionItem';
 import FontSelect from './FontSelect';
@@ -14,7 +15,7 @@ import { ConditionContext } from '../state/contexts';
 const ConditionsArea: FC = () => {
   const [isSlider, setIsSlider] = useState(true);
   const { condition, setCondition } = useContext(ConditionContext);
-  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs } = condition;
+  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs, bgimg } = condition;
 
   return (
     <Box sx={{
@@ -25,15 +26,25 @@ const ConditionsArea: FC = () => {
         p: 2,
         bgcolor: '#95ca7f',
       }}>
-        <FilledInput
-          autoFocus
-          fullWidth
-          hiddenLabel
-          size="small"
-          color="success"
-          value={txt}
-          onChange={e => setCondition(prev => ({ ...prev, txt: e.target.value }))}
-        />
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+        }}>
+          <FilledInput
+            autoFocus
+            fullWidth
+            hiddenLabel
+            size="small"
+            color="success"
+            value={txt}
+            onChange={e => setCondition(prev => ({ ...prev, txt: e.target.value }))}
+          />
+          <BgButton
+            value={bgimg}
+            onChange={value => setCondition(prev => ({ ...prev, bgimg: value }))}
+            sx={{ ml: 2 }}
+          />
+        </Box>
         <Grid
           container
           spacing={1}

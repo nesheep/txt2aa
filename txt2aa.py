@@ -25,12 +25,30 @@ def __make_map(
     return np.array(str_list)[l256]
 
 
+def __txt2img_withbg(
+    txt: str,
+    fontpath: str,
+    fontsize: int,
+    color: str,
+    bgpath: str,
+) -> Image.Image:
+    with Image.open(bgpath) as img:
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype(fontpath, fontsize)
+        w, h = img.size
+        draw.text((w / 2, h / 2), txt, color, font, "mm")
+        return img
+
+
 def txt2img(
     txt: str,
     fontpath: str,
     fontsize: int,
     color: str = "black",
+    bgpath: str = "",
 ) -> Image.Image:
+    if bgpath:
+        return __txt2img_withbg(txt, fontpath, fontsize, color, bgpath)
     img = Image.new("RGBA", (1, 1))
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(fontpath, fontsize)
@@ -83,11 +101,16 @@ def txt2aa(
     txt: str,
     fontpath: str,
     fontsize: int,
+    color: str,
     aa_font: str,
     numy: int,
     str_list: list[str],
+    bgpath: str,
 ) -> str:
-    img = txt2img(txt, fontpath, fontsize)
+    if bgpath:
+        img = txt2img(txt, fontpath, fontsize, color, bgpath)
+    else:
+        img = txt2img(txt, fontpath, fontsize)
     aa = img2aa(img, numy, aa_font, str_list)
     return "\n".join(["".join(row) for row in aa])
 
@@ -101,7 +124,11 @@ def txt2aa_img(
     numy: int,
     exp: float,
     str_list: list[str],
+    bgpath: str,
 ) -> Image.Image:
-    img = txt2img(txt, fontpath, fontsize)
+    if bgpath:
+        img = txt2img(txt, fontpath, fontsize, color, bgpath)
+    else:
+        img = txt2img(txt, fontpath, fontsize)
     aa = img2aa(img, numy, aa_font, str_list)
     return aa2img(aa, img.size, aa_font, exp, color)
