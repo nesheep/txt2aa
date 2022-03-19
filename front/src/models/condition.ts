@@ -7,6 +7,7 @@ type Condition = {
   numy: number;
   exp: number;
   aaStrs: string;
+  bgimg: string;
 };
 
 export const FONT_NAMES: string[] = [
@@ -92,29 +93,32 @@ const buildUrl = (url: string, params: { name: string, value: string }[]): strin
 };
 
 export const getTxt2imgUrl = (condition: Condition): string => {
-  const { txt, font, fontSize, color } = condition;
+  const { txt, font, fontSize, color, bgimg } = condition;
   return buildUrl('/txt2img', [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
     { name: 'clr', value: color },
+    { name: 'bg', value: bgimg },
   ]);
 };
 
 export const getTxt2aaUrl = (condition: Condition): string => {
-  const { txt, font, fontSize, aaFont, numy, aaStrs } = condition;
+  const { txt, font, fontSize, color, aaFont, numy, aaStrs, bgimg } = condition;
   return buildUrl('/txt2aa', [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
+    { name: 'clr', value: color },
     { name: 'afnt', value: fontMap(aaFont) },
     { name: 'ny', value: String(numy) },
     { name: 'astr', value: aaStrs },
+    { name: 'bg', value: bgimg },
   ]);
 };
 
 export const getTxt2aaimgUrl = (condition: Condition): string => {
-  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs } = condition;
+  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs, bgimg } = condition;
   return buildUrl('/txt2aa/img', [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
@@ -124,6 +128,7 @@ export const getTxt2aaimgUrl = (condition: Condition): string => {
     { name: 'ny', value: String(numy) },
     { name: 'exp', value: String(exp) },
     { name: 'astr', value: aaStrs },
+    { name: 'bg', value: bgimg },
   ]);
 };
 
@@ -136,6 +141,7 @@ export const initialCondition: Condition = {
   numy: 20,
   exp: 1,
   aaStrs: `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'"!?#&()~^|@;:.,[]{}<>_0123456789`,
+  bgimg: '',
 };
 
 export default Condition;

@@ -1,6 +1,7 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Popover from '@mui/material/Popover';
 import { PhotoshopPicker } from 'react-color';
 
 type Props = {
@@ -11,19 +12,23 @@ type Props = {
 const ColorPicker: FC<Props> = ({ color, onAccept }) => {
   const [clr, setClr] = useState(color);
   const [open, setOpen] = useState(false);
+  const anchorEl = useRef<HTMLDivElement>(null);
 
-  const onCancel = useCallback(() => {
+  const handleCancel = useCallback(() => {
     setOpen(false);
     setClr(color);
   }, [color]);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-      }}>
+    <>
+      <Box
+        ref={anchorEl}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
         <Box sx={{
           flexGrow: 1,
           height: 28,
@@ -39,38 +44,26 @@ const ColorPicker: FC<Props> = ({ color, onAccept }) => {
           変更
         </Button>
       </Box>
-      {open &&
-        <>
-          <button
-            onClick={onCancel}
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              zIndex: 1000,
-              border: 0,
-              opacity: 0,
-            }}
-          />
-          <Box sx={{
-            position: 'absolute',
-            zIndex: 1001,
-          }}>
-            <PhotoshopPicker
-              color={clr}
-              onChange={c => setClr(c.hex)}
-              onCancel={onCancel}
-              onAccept={() => {
-                setOpen(false);
-                onAccept(clr);
-              }}
-            />
-          </Box>
-        </>
-      }
-    </Box>
+      <Popover
+        open={open}
+        anchorEl={anchorEl.current}
+        onClose={handleCancel}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <PhotoshopPicker
+          color={clr}
+          onChange={c => setClr(c.hex)}
+          onCancel={handleCancel}
+          onAccept={() => {
+            setOpen(false);
+            onAccept(clr);
+          }}
+        />
+      </Popover>
+    </>
   );
 };
 
