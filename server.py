@@ -7,13 +7,13 @@ from PIL import Image
 from webview import OPEN_DIALOG, Window, windows
 
 from txt2aa import txt2aa, txt2aa_img, txt2img
-from utils import is_valid_font, isfloat, isint, resource_path
+from utils import is_valid_font, isfloat, isint, relative_path
 
 FONT = "msgothic.ttc"
 STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
 EMPTY_IMG = Image.new("RGBA", (100, 100), (255, 255, 255, 0))
 
-html_folder = resource_path(Path("front/build"))
+html_folder = relative_path(Path("front/build"))
 server = Flask(
     import_name=__name__,
     static_folder=str(html_folder / "static"),

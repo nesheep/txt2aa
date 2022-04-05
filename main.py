@@ -15,4 +15,4 @@ def create_window() -> webview.Window:
 
 if __name__ == "__main__":
     create_window()
-    webview.start()
+    webview.start(debug=True, gui="cef")

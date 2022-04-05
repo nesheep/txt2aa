@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pyinstaller = "*"
-pywebview = "*"
+pywebview = {extras = ["cef"], version = "*"}
 flask = "*"
 pillow = "*"
 numpy = "*"
@@ -19,4 +19,4 @@ python_version = "3.8"
 
 [scripts]
 start = "python main.py"
-build = "pyinstaller --onefile --clean --distpath ./dist/txt2aa main.spec"
+build = "pyinstaller --clean main.spec"

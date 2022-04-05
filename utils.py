@@ -1,15 +1,13 @@
 from __future__ import annotations
 
 import re
-import sys
 from pathlib import Path
 
 from PIL import ImageFont
 
 
-def resource_path(relative_path: str | Path) -> Path:
-    base_path = getattr(sys, "_MEIPASS", str(Path(__file__).absolute().parent))
-    return Path(base_path) / relative_path
+def relative_path(_path: str | Path) -> Path:
+    return Path(__file__).absolute().parent / _path
 
 
 def isint(s) -> bool:

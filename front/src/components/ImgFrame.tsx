@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -16,19 +16,8 @@ type Props = {
 
 const ImgFrame: FC<Props> = ({ alt, src, download }) => {
   const container = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(100);
   const [fit, setFit] = useState(false);
   const [bgcolor, setBgcolor] = useState<string>(common.white);
-
-  const resizeListener = () => {
-    if (!container.current) return;
-    setHeight(container.current.clientHeight);
-  };
-
-  useEffect(() => {
-    resizeListener();
-    window.addEventListener('resize', resizeListener);
-  }, [container]);
 
   return (
     <Box
@@ -46,7 +35,7 @@ const ImgFrame: FC<Props> = ({ alt, src, download }) => {
         alt={alt}
         src={src}
         style={{
-          height,
+          height: '100%',
           width: '100%',
           backgroundColor: bgcolor,
           borderRadius: 10,

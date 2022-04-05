@@ -1,11 +1,10 @@
 @echo off
 
 rd /s /q build
-rd /s /q dist
+rd /s /q dist\txt2aa
 
 cd front
 call yarn build
 
 cd ..
 call pipenv run build
-copy dll\fribidi.dll dist\txt2aa\fribidi.dll
