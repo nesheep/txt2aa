@@ -26,7 +26,7 @@ const App: FC = () => {
     }}>
       <ConditionArea />
       <Box sx={{
-        height: '100%',
+        height: 'calc((100% - 292px) / 2)',
         width: '100%',
         mt: 2,
       }}>
@@ -37,7 +37,7 @@ const App: FC = () => {
         />
       </Box>
       <Box sx={{
-        height: '100%',
+        height: 'calc((100% - 292px) / 2)',
         width: '100%',
         mt: 2,
         position: 'relative',
