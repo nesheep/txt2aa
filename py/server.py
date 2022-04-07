@@ -3,6 +3,7 @@ from io import BytesIO
 from flask import Flask, make_response, request, send_file
 from flask.wrappers import Response
 from PIL import Image
+from werkzeug.wrappers.response import Response as Res
 
 from txt2aa import txt2aa, txt2aa_img, txt2img
 from utils import is_valid_font, isfloat, isint
@@ -12,6 +13,14 @@ STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;
 EMPTY_IMG = Image.new("RGBA", (100, 100), (255, 255, 255, 0))
 
 server = Flask(import_name=__name__)
+
+
+@server.after_request
+def after_request(res: Res) -> Res:
+    res.headers.add("Access-Control-Allow-Origin", "*")
+    res.headers.add("Access-Control-Allow-Methods", "GET,OPTIONS")
+    res.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    return res
 
 
 @server.route("/")
