@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
 import '@fontsource/roboto/300.css';
@@ -21,6 +22,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <AppProvider>
+        <CssBaseline />
         <App />
       </AppProvider>
     </ThemeProvider>

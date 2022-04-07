@@ -7,7 +7,10 @@ type Props = { open: boolean };
 const BackdropProgress: FC<Props> = ({ open }) => (
   <Backdrop
     open={open}
-    sx={{ color: 'common.white' }}
+    sx={{
+      color: 'common.black',
+      bgcolor: '#00000000',
+    }}
   >
     <CircularProgress color="inherit" />
   </Backdrop>
