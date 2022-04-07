@@ -7,6 +7,11 @@
   "main": "build/electron/main.js",
   "private": true,
   "dependencies": {
+    "electron-devtools-installer": "^3.2.0",
+    "electron-dl": "^3.3.0",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "devDependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fontsource/noto-sans-jp": "^4.5.7",
@@ -19,14 +24,18 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
+    "@types/react-color": "^3.0.6",
     "@types/react-dom": "^17.0.9",
-    "electron-devtools-installer": "^3.2.0",
-    "electron-reload": "^2.0.0-alpha.1",
+    "concurrently": "^7.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^18.0.2",
+    "electron-builder": "^22.14.13",
     "react": "^18.0.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.0",
     "typescript": "^4.4.2",
+    "wait-on": "^6.0.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
@@ -76,13 +85,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/react-color": "^3.0.6",
-    "concurrently": "^7.1.0",
-    "cross-env": "^7.0.3",
-    "electron": "^18.0.2",
-    "electron-builder": "^22.14.13",
-    "wait-on": "^6.0.1"
   }
 }

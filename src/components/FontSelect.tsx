@@ -47,13 +47,10 @@ const FontSelect: FC<Props> = ({ value, onChange }) => {
       <Button
         variant="outlined"
         onClick={async () => {
-          try {
-            const font = (await (await fetch('/open/font')).json()).font;
-            setFontNames(prev => prev.includes(font) ? prev : [...prev, font]);
-            onChange(font);
-          } catch (error) {
-            if (error instanceof Error) console.error(error.message);
-          }
+          const font = await window.api.openFont();
+          if (!font) return;
+          setFontNames(prev => prev.includes(font) ? prev : [...prev, font]);
+          onChange(font);
         }}
       >
         参照

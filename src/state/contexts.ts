@@ -11,3 +11,8 @@ export const FontNamesContext = createContext({} as {
   fontNames: string[];
   setFontNames: Dispatch<SetStateAction<string[]>>;
 });
+
+export const PortContext = createContext({} as {
+  port: number;
+  setPort: Dispatch<SetStateAction<number>>;
+});

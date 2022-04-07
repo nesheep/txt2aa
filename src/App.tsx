@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
@@ -7,10 +7,18 @@ import TxtDownloadIcon from '@mui/icons-material/FormatColorTextRounded';
 import ConditionArea from './components/ConditionArea';
 import ImgFrame from './components/ImgFrame';
 import { getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
-import { ConditionContext } from './state/contexts';
+import { ConditionContext, PortContext } from './state/contexts';
 
 const App: FC = () => {
   const { condition } = useContext(ConditionContext);
+  const { port, setPort } = useContext(PortContext);
+
+  useEffect(() => {
+    (async () => {
+      const p = await window.api.getPort();
+      p && setPort(p);
+    })();
+  });
 
   return (
     <Box sx={{
@@ -26,25 +34,25 @@ const App: FC = () => {
     }}>
       <ConditionArea />
       <Box sx={{
-        height: 'calc((100% - 292px) / 2)',
+        height: 'calc((100% - 294px) / 2)',
         width: '100%',
         mt: 2,
       }}>
         <ImgFrame
           alt="txt2img"
-          src={getTxt2imgUrl(condition)}
+          src={getTxt2imgUrl(condition, port)}
           download="before.png"
         />
       </Box>
       <Box sx={{
-        height: 'calc((100% - 292px) / 2)',
+        height: 'calc((100% - 294px) / 2)',
         width: '100%',
         mt: 2,
         position: 'relative',
       }}>
         <ImgFrame
           alt="txt2aa"
-          src={getTxt2aaimgUrl(condition)}
+          src={getTxt2aaimgUrl(condition, port)}
           download="after.png"
         />
         <Box sx={{
@@ -54,10 +62,7 @@ const App: FC = () => {
           bgcolor: grey.A200,
           borderRadius: '100%',
         }}>
-          <IconButton
-            href={getTxt2aaUrl(condition)}
-            download="aa.txt"
-          >
+          <IconButton onClick={() => window.api.download(getTxt2aaUrl(condition, port), 'aa.txt')}>
             <TxtDownloadIcon />
           </IconButton>
         </Box>

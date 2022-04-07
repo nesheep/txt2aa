@@ -23,26 +23,29 @@ const ImgFrame: FC<Props> = ({ alt, src, download }) => {
     <Box
       ref={container}
       sx={{
+        bgcolor,
         height: '100%',
         width: '100%',
+        borderRadius: '10px',
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <img
-        alt={alt}
-        src={src}
-        style={{
-          height: '100%',
-          width: '100%',
-          backgroundColor: bgcolor,
-          borderRadius: 10,
-          display: 'block',
-          objectFit: fit ? 'scale-down' : 'none',
-        }}
-      />
+      {Boolean(src) &&
+        <img
+          alt={alt}
+          src={src}
+          style={{
+            height: '100%',
+            width: '100%',
+            borderRadius: 10,
+            display: 'block',
+            objectFit: fit ? 'scale-down' : 'none',
+          }}
+        />
+      }
       <Box sx={{
         position: 'absolute',
         left: 5,
@@ -76,10 +79,7 @@ const ImgFrame: FC<Props> = ({ alt, src, download }) => {
         bgcolor: grey.A200,
         borderRadius: '100%',
       }}>
-        <IconButton
-          href={src}
-          download={download}
-        >
+        <IconButton onClick={() => window.api.download(src, download)}>
           <DownloadIcon />
         </IconButton>
       </Box>

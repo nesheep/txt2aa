@@ -58,12 +58,8 @@ const BgButton: FC<Props> = ({ value, onChange, sx }) => {
             variant="outlined"
             sx={{ ml: 1 }}
             onClick={async () => {
-              try {
-                const img = (await (await fetch('/open/img')).json()).img;
-                onChange(img);
-              } catch (error) {
-                if (error instanceof Error) console.error(error.message);
-              }
+              const img = await window.api.openImage();
+              img && onChange(img);
               setAnchorEl(null);
             }}
           >

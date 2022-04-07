@@ -20,12 +20,11 @@ at `.\py\`
 
 ```powershell
 > pipenv sync
-> pipenv run build
 ```
 
 at `.\`
 
 ```powershell
 > yarn install
-> yarn electron:build
+> .\scripts\build.bat
 ```

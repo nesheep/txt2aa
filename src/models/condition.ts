@@ -86,15 +86,16 @@ export const fontMap = (fontName: string): string => {
   return fontName;
 };
 
-const buildUrl = (url: string, params: { name: string, value: string }[]): string => {
-  const u = new URL(`http://localhost:33333/${url}`, window.origin);
+const buildUrl = (url: string, port: number, params: { name: string, value: string }[]): string => {
+  if (!port) return '';
+  const u = new URL(`http://localhost:${port}/${url}`, window.origin);
   params.forEach(({ name, value }) => u.searchParams.set(name, value));
   return u.toString();
 };
 
-export const getTxt2imgUrl = (condition: Condition): string => {
+export const getTxt2imgUrl = (condition: Condition, port: number): string => {
   const { txt, font, fontSize, color, bgimg } = condition;
-  return buildUrl('txt2img', [
+  return buildUrl('txt2img', port, [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
@@ -103,9 +104,9 @@ export const getTxt2imgUrl = (condition: Condition): string => {
   ]);
 };
 
-export const getTxt2aaUrl = (condition: Condition): string => {
+export const getTxt2aaUrl = (condition: Condition, port: number): string => {
   const { txt, font, fontSize, color, aaFont, numy, aaStrs, bgimg } = condition;
-  return buildUrl('txt2aa', [
+  return buildUrl('txt2aa', port, [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
@@ -117,9 +118,9 @@ export const getTxt2aaUrl = (condition: Condition): string => {
   ]);
 };
 
-export const getTxt2aaimgUrl = (condition: Condition): string => {
+export const getTxt2aaimgUrl = (condition: Condition, port: number): string => {
   const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs, bgimg } = condition;
-  return buildUrl('txt2aa/img', [
+  return buildUrl('txt2aa/img', port, [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
