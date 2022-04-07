@@ -43,20 +43,25 @@ const quit = () => {
 };
 
 app.whenReady().then(async () => {
-  if (app.isPackaged) {
-    pytxt2aa.run();
+  app.isPackaged && pytxt2aa.run();
+
+  for (let i = 0; i < 40; i++) {
     try {
-      await fetch(`http://localhost:${pytxt2aa.port}`, { timeout: 20000 });
+      await fetch(`http://localhost:${pytxt2aa.port}`, { timeout: 2000 });
+      break;
     } catch (error) {
       if (error instanceof Error) console.error(error.message);
+      await new Promise<void>((resolve, _) => setTimeout(() => resolve(), 250));
     }
   }
 
-  try {
-    const name = await installExtension(REACT_DEVELOPER_TOOLS);
-    console.log(`Added Extension: ${name}`);
-  } catch (error) {
-    console.log(`An error occurred: ${error}`);
+  if (!app.isPackaged) {
+    try {
+      const name = await installExtension(REACT_DEVELOPER_TOOLS);
+      console.log(`Added Extension: ${name}`);
+    } catch (error) {
+      console.log(`An error occurred: ${error}`);
+    }
   }
 
   createWindow();
