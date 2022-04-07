@@ -4,6 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
 import TxtDownloadIcon from '@mui/icons-material/FormatColorTextRounded';
 
+import BackdropProgress from './components/BackdropProgress';
 import ConditionArea from './components/ConditionArea';
 import ImgFrame from './components/ImgFrame';
 import { getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
@@ -16,7 +17,17 @@ const App: FC = () => {
   useEffect(() => {
     (async () => {
       const p = await window.api.getPort();
-      p && setPort(p);
+      if (!p) return;
+      for (let i = 0; i < 120; i++) {
+        try {
+          await fetch(`http://localhost:${p}`);
+          break;
+        } catch (error) {
+          if (error instanceof Error) console.error(error.message);
+          await new Promise<void>(resolve => setTimeout(resolve, 250));
+        }
+      }
+      setPort(p);
     })();
   });
 
@@ -67,6 +78,7 @@ const App: FC = () => {
           </IconButton>
         </Box>
       </Box>
+      <BackdropProgress open={Boolean(!port)} />
     </Box>
   );
 };
