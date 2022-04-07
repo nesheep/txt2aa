@@ -2,6 +2,7 @@ import * as path from 'path';
 
 import { app, BrowserWindow, ipcMain } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import fetch from 'electron-fetch';
 
 import * as C from './cannel';
 import * as listener from './listener';
@@ -42,7 +43,14 @@ const quit = () => {
 };
 
 app.whenReady().then(async () => {
-  app.isPackaged && pytxt2aa.run();
+  if (app.isPackaged) {
+    pytxt2aa.run();
+    try {
+      await fetch(`http://localhost:${pytxt2aa.port}`, { timeout: 20000 });
+    } catch (error) {
+      if (error instanceof Error) console.error(error.message);
+    }
+  }
 
   try {
     const name = await installExtension(REACT_DEVELOPER_TOOLS);

@@ -14,6 +14,11 @@ EMPTY_IMG = Image.new("RGBA", (100, 100), (255, 255, 255, 0))
 server = Flask(import_name=__name__)
 
 
+@server.route("/")
+def index() -> str:
+    return "OK"
+
+
 @server.route("/txt2img")
 def get_txt2img() -> Response:
     txt_arg = request.args.get("txt", "")

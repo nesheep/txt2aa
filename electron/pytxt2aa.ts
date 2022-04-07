@@ -12,7 +12,7 @@ const randomPort = (): number => {
     const p = Math.round(Math.random() * (MAXPORT - MINPORT) + MINPORT);
     const server = createServer();
     server.on('error', err => { throw Error(err.message) });
-    server.listen(port, () => { server.close() });
+    server.listen(p, () => { server.close() });
     return p;
   } catch {
     return randomPort();
