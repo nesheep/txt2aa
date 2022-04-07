@@ -1,0 +1,89 @@
+{
+  "name": "txt2aa",
+  "version": "0.3.0",
+  "author": "nesheep",
+  "description": "txt2aa",
+  "homepage": ".",
+  "main": "build/electron/main.js",
+  "private": true,
+  "dependencies": {
+    "electron-devtools-installer": "^3.2.0",
+    "electron-dl": "^3.3.0",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@fontsource/noto-sans-jp": "^4.5.7",
+    "@fontsource/roboto": "^4.5.5",
+    "@mui/icons-material": "^5.6.0",
+    "@mui/material": "^5.6.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^17.0.20",
+    "@types/react-color": "^3.0.6",
+    "@types/react-dom": "^17.0.9",
+    "concurrently": "^7.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^18.0.2",
+    "electron-builder": "^22.14.13",
+    "react": "^18.0.0",
+    "react-color": "^2.19.3",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.4.2",
+    "wait-on": "^6.0.1",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "postinstall": "electron-builder install-app-deps",
+    "electron:dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
+    "electron:build": "yarn build && tsc -p electron && electron-builder",
+    "eject": "react-scripts eject"
+  },
+  "build": {
+    "extends": null,
+    "files": [
+      "build/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "extraFiles": [
+      {
+        "from": "py/dist",
+        "to": "libs",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "zip"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
