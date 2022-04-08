@@ -47,6 +47,8 @@ const quit = () => {
 };
 
 app.whenReady().then(async () => {
+  app.isPackaged && pytxt2aa.run();
+
   if (!app.isPackaged) {
     try {
       const name = await installExtension(REACT_DEVELOPER_TOOLS);
@@ -64,6 +66,4 @@ app.whenReady().then(async () => {
   ipcMain.on(C.DOWNLOAD, listener.downloadUrl);
 
   app.once('window-all-closed', () => quit());
-
-  app.isPackaged && pytxt2aa.run();
 });
