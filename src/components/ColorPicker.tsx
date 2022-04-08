@@ -1,15 +1,19 @@
 import { FC, useCallback, useState, useRef } from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import ButtonBase from '@mui/material/ButtonBase';
 import Popover from '@mui/material/Popover';
+import Tooltip from '@mui/material/Tooltip';
+import { SxProps, Theme } from '@mui/material/styles';
 import { PhotoshopPicker } from 'react-color';
 
 type Props = {
+  label: string;
   color: string;
   onAccept: (color: string) => void;
+  sx?: SxProps<Theme>;
 };
 
-const ColorPicker: FC<Props> = ({ color, onAccept }) => {
+const ColorPicker: FC<Props> = ({ label, color, onAccept, sx }) => {
   const [clr, setClr] = useState(color);
   const [open, setOpen] = useState(false);
   const anchorEl = useRef<HTMLDivElement>(null);
@@ -21,39 +25,47 @@ const ColorPicker: FC<Props> = ({ color, onAccept }) => {
 
   return (
     <>
-      <Box
-        ref={anchorEl}
-        sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-        }}
+      <Tooltip
+        title={label}
+        placement="top"
+        arrow
       >
-        <Box sx={{
-          flexGrow: 1,
-          height: 28,
-          mr: 2.5,
-          bgcolor: color,
-          border: '1px solid rgba(0, 0, 0, 0.3)',
-          borderRadius: 2,
-        }} />
-        <Button
-          variant="outlined"
-          onClick={() => setOpen(true)}
+        <Box
+          ref={anchorEl}
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            ...sx,
+          }}
         >
-          変更
-        </Button>
-      </Box>
+          <ButtonBase
+            onClick={() => setOpen(true)}
+            sx={{
+              flexGrow: 1,
+              height: 28,
+              bgcolor: color,
+              border: '1px solid rgba(0, 0, 0, 0.3)',
+              borderRadius: 2,
+            }}
+          />
+        </Box>
+      </Tooltip>
       <Popover
         open={open}
         anchorEl={anchorEl.current}
         onClose={handleCancel}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
         }}
       >
         <PhotoshopPicker
+          header={label}
           color={clr}
           onChange={c => setClr(c.hex)}
           onCancel={handleCancel}

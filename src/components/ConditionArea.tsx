@@ -15,7 +15,7 @@ import { ConditionContext } from '../state/contexts';
 const ConditionsArea: FC = () => {
   const [isSlider, setIsSlider] = useState(true);
   const { condition, setCondition } = useContext(ConditionContext);
-  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs, bgimg } = condition;
+  const { txt, font, fontSize, color, aaFont, aaColor, numy, exp, aaStrs, bgimg } = condition;
 
   return (
     <Box sx={{
@@ -86,8 +86,16 @@ const ConditionsArea: FC = () => {
           </ConditionItem>
           <ConditionItem label="色">
             <ColorPicker
+              label="テキスト色"
               color={color}
               onAccept={c => setCondition(prev => ({ ...prev, color: c }))}
+              sx={{ mr: 1 }}
+            />
+            <ColorPicker
+              label="AA色"
+              color={aaColor}
+              onAccept={c => setCondition(prev => ({ ...prev, aaColor: c }))}
+              sx={{ ml: 1 }}
             />
           </ConditionItem>
           <ConditionItem label="AAフォント倍率">

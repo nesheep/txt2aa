@@ -4,6 +4,7 @@ type Condition = {
   fontSize: number;
   color: string;
   aaFont: string;
+  aaColor: string;
   numy: number;
   exp: number;
   aaStrs: string;
@@ -119,13 +120,14 @@ export const getTxt2aaUrl = (condition: Condition, port: number): string => {
 };
 
 export const getTxt2aaimgUrl = (condition: Condition, port: number): string => {
-  const { txt, font, fontSize, color, aaFont, numy, exp, aaStrs, bgimg } = condition;
+  const { txt, font, fontSize, color, aaFont, aaColor, numy, exp, aaStrs, bgimg } = condition;
   return buildUrl('txt2aa/img', port, [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
     { name: 'clr', value: color },
     { name: 'afnt', value: fontMap(aaFont) },
+    { name: 'aclr', value: aaColor },
     { name: 'ny', value: String(numy) },
     { name: 'exp', value: String(exp) },
     { name: 'astr', value: aaStrs },
@@ -135,12 +137,13 @@ export const getTxt2aaimgUrl = (condition: Condition, port: number): string => {
 
 export const initialCondition: Condition = {
   txt: 'aa',
-  font: 'MS ゴシック 標準',
-  fontSize: 200,
-  color: '#000000',
-  aaFont: 'MS ゴシック 標準',
-  numy: 20,
-  exp: 1,
+  font: '游明朝 標準',
+  fontSize: 250,
+  color: '#4C1708',
+  aaFont: 'メイリオ ボールド',
+  aaColor: '#537146',
+  numy: 30,
+  exp: 1.2,
   aaStrs: `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'"!?#&()~^|@;:.,[]{}<>_0123456789`,
   bgimg: '',
 };

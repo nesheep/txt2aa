@@ -107,10 +107,7 @@ def txt2aa(
     str_list: list[str],
     bgpath: str,
 ) -> str:
-    if bgpath:
-        img = txt2img(txt, fontpath, fontsize, color, bgpath)
-    else:
-        img = txt2img(txt, fontpath, fontsize)
+    img = txt2img(txt, fontpath, fontsize, color, bgpath)
     aa = img2aa(img, numy, aa_font, str_list)
     return "\n".join(["".join(row) for row in aa])
 
@@ -121,14 +118,12 @@ def txt2aa_img(
     fontsize: int,
     color: str,
     aa_font: str,
+    aa_color: str,
     numy: int,
     exp: float,
     str_list: list[str],
     bgpath: str,
 ) -> Image.Image:
-    if bgpath:
-        img = txt2img(txt, fontpath, fontsize, color, bgpath)
-    else:
-        img = txt2img(txt, fontpath, fontsize)
+    img = txt2img(txt, fontpath, fontsize, color, bgpath)
     aa = img2aa(img, numy, aa_font, str_list)
-    return aa2img(aa, img.size, aa_font, exp, color)
+    return aa2img(aa, img.size, aa_font, exp, aa_color)
