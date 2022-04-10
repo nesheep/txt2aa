@@ -47,7 +47,7 @@ const quit = () => {
 };
 
 app.whenReady().then(async () => {
-  app.isPackaged && pytxt2aa.run();
+  app.isPackaged && await pytxt2aa.run();
 
   if (!app.isPackaged) {
     try {
