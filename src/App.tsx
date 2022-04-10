@@ -30,7 +30,7 @@ const App: FC = () => {
       }
       setPort(p);
     })();
-  });
+  }, [setPort]);
 
   return (
     <>
