@@ -8,6 +8,7 @@ pyinstaller = "*"
 flask = "*"
 pillow = "*"
 numpy = "*"
+waitress = "*"
 
 [dev-packages]
 autopep8 = "*"
