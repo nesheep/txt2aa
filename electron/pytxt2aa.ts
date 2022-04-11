@@ -1,9 +1,9 @@
-import { exec, execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import { createServer } from 'net';
 import * as path from 'path';
 
-let pid = 0;
-export let port = 33333;
+let pids: number[] = [];
+export let ports: number[] = [];
 
 const randomPort = async (): Promise<number> => {
   const MAXPORT = 65536;
@@ -20,12 +20,18 @@ const randomPort = async (): Promise<number> => {
   return new Promise(resolve => { rp(p => resolve(p)) });
 };
 
-export const run = async (): Promise<void> => {
-  port = await randomPort();
-  const proc = exec(`${path.resolve('libs/pytxt2aa/pytxt2aa.exe')} -p ${port}`);
-  pid = proc.pid ? proc.pid : 0;
+const runOne = async (): Promise<void> => {
+  const port = await randomPort();
+  ports.push(port);
+  const proc = spawn(path.resolve('libs/pytxt2aa/pytxt2aa.exe'), ['-p', String(port)]);
+  if (proc.pid) pids.push(proc.pid);
+};
+
+
+export const run = async (procs: number = 1): Promise<void> => {
+  for (let i = 0; i < procs; i++) await runOne();
 };
 
 export const kill = () => {
-  execSync(`taskkill /F /PID ${pid} /T`);
+  pids.forEach(pid => execSync(`taskkill /F /PID ${pid} /T`));
 };

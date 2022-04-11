@@ -87,16 +87,17 @@ export const fontMap = (fontName: string): string => {
   return fontName;
 };
 
-const buildUrl = (url: string, port: number, params: { name: string, value: string }[]): string => {
-  if (!port) return '';
+const buildUrl = (url: string, ports: number[], params: { name: string, value: string }[]): string => {
+  if (!ports.length) return '';
+  const port = ports[Math.floor(Math.random() * ports.length)];
   const u = new URL(`http://localhost:${port}/${url}`, window.origin);
   params.forEach(({ name, value }) => u.searchParams.set(name, value));
   return u.toString();
 };
 
-export const getTxt2imgUrl = (condition: Condition, port: number): string => {
+export const getTxt2imgUrl = (condition: Condition, ports: number[]): string => {
   const { txt, font, fontSize, color, bgimg } = condition;
-  return buildUrl('txt2img', port, [
+  return buildUrl('txt2img', ports, [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
@@ -105,9 +106,9 @@ export const getTxt2imgUrl = (condition: Condition, port: number): string => {
   ]);
 };
 
-export const getTxt2aaUrl = (condition: Condition, port: number): string => {
+export const getTxt2aaUrl = (condition: Condition, ports: number[]): string => {
   const { txt, font, fontSize, color, aaFont, numy, aaStrs, bgimg } = condition;
-  return buildUrl('txt2aa', port, [
+  return buildUrl('txt2aa', ports, [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },
@@ -119,9 +120,9 @@ export const getTxt2aaUrl = (condition: Condition, port: number): string => {
   ]);
 };
 
-export const getTxt2aaimgUrl = (condition: Condition, port: number): string => {
+export const getTxt2aaimgUrl = (condition: Condition, ports: number[]): string => {
   const { txt, font, fontSize, color, aaFont, aaColor, numy, exp, aaStrs, bgimg } = condition;
-  return buildUrl('txt2aa/img', port, [
+  return buildUrl('txt2aa/img', ports, [
     { name: 'txt', value: txt },
     { name: 'fnt', value: fontMap(font) },
     { name: 'fs', value: String(fontSize) },

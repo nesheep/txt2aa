@@ -1,3 +1,4 @@
+import { cpus } from 'os';
 import * as path from 'path';
 
 import { app, BrowserWindow, ipcMain } from 'electron';
@@ -47,7 +48,11 @@ const quit = () => {
 };
 
 app.whenReady().then(async () => {
-  app.isPackaged && await pytxt2aa.run();
+  if (app.isPackaged) {
+    const cpusLen = cpus().length;
+    const procs = cpusLen > 2 ? cpusLen : 2;
+    await pytxt2aa.run(procs);
+  }
 
   if (!app.isPackaged) {
     try {
@@ -60,7 +65,7 @@ app.whenReady().then(async () => {
 
   createWindow();
 
-  ipcMain.handle(C.GET_PORT, listener.getPort);
+  ipcMain.handle(C.GET_PORTS, listener.getPorts);
   ipcMain.handle(C.OPEN_IMAGE, listener.openImage);
   ipcMain.handle(C.OPEN_FONT, listener.openFont);
   ipcMain.on(C.DOWNLOAD, listener.downloadUrl);

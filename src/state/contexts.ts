@@ -12,7 +12,7 @@ export const FontNamesContext = createContext({} as {
   setFontNames: Dispatch<SetStateAction<string[]>>;
 });
 
-export const PortContext = createContext({} as {
-  port: number;
-  setPort: Dispatch<SetStateAction<number>>;
+export const PortsContext = createContext({} as {
+  ports: number[];
+  setPorts: Dispatch<SetStateAction<number[]>>;
 });
