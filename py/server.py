@@ -1,4 +1,5 @@
 from io import BytesIO
+from math import floor
 
 from flask import Flask, make_response, request, send_file
 from flask.wrappers import Response
@@ -6,7 +7,7 @@ from PIL import Image
 from werkzeug.wrappers.response import Response as Res
 
 from txt2aa import txt2aa, txt2aa_img, txt2img
-from utils import is_valid_font, isfloat, isint
+from utils import is_valid_font, isfloat
 
 FONT = "msgothic.ttc"
 STRS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz +-*/%'\"!?#&()~^|@;:.,[]{}<>_0123456789"
@@ -38,7 +39,7 @@ def get_txt2img() -> Response:
 
     txt = txt_arg
     fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
-    fontsize = int(fs_arg) if isint(fs_arg) else 200
+    fontsize = floor(float(fs_arg)) if isfloat(fs_arg) else 200
     color = clr_arg
     bgpath = bg_arg
 
@@ -67,10 +68,10 @@ def get_txt2aa() -> str:
 
     txt = txt_arg
     fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
-    fontsize = int(fs_arg) if isint(fs_arg) else 200
+    fontsize = floor(float(fs_arg)) if isfloat(fs_arg) else 200
     color = clr_arg
     aa_font = afnt_arg if is_valid_font(afnt_arg) else FONT
-    numy = int(ny_arg) if isint(ny_arg) else 20
+    numy = floor(float(ny_arg)) if isfloat(ny_arg) else 20
     str_list = list(astr_arg)
     bgpath = bg_arg
 
@@ -95,11 +96,11 @@ def get_txt2aa_img() -> Response:
 
     txt = txt_arg
     fontpath = fnt_arg if is_valid_font(fnt_arg) else FONT
-    fontsize = int(fs_arg) if isint(fs_arg) else 200
+    fontsize = floor(float(fs_arg)) if isfloat(fs_arg) else 200
     color = clr_arg
     aa_font = afnt_arg if is_valid_font(afnt_arg) else FONT
     aa_color = aclr_arg
-    numy = int(ny_arg) if isint(ny_arg) else 20
+    numy = floor(float(ny_arg)) if isfloat(ny_arg) else 20
     exp = float(exp_arg) if isfloat(exp_arg) else 1.0
     str_list = list(astr_arg)
     bgpath = bg_arg

@@ -5,10 +5,6 @@ import re
 from PIL import ImageFont
 
 
-def isint(s) -> bool:
-    return True if re.fullmatch(r"[-+]?\d+", s) else False
-
-
 def isfloat(s) -> bool:
     return True if re.fullmatch(r"[-+]?(\d+\.?\d*|\.\d+)([eE][-+]?\d+)?", s) else False
 
