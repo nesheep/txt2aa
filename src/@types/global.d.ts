@@ -5,7 +5,7 @@ declare global {
 }
 
 export type Api = {
-  getPort: () => Promise<number>;
+  getPorts: () => Promise<number[]>;
   openImage: () => Promise<string>;
   openFont: () => Promise<string>;
   download: (url: string, filename: string) => void;

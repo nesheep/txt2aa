@@ -2,16 +2,16 @@ import { FC, ReactNode } from 'react';
 
 import ConditionProvider from './ConditionProvider';
 import FontNamesProvider from './FontNamesProvider';
-import PortProvider from './PortProvider';
+import PortsProvider from './PortsProvider';
 
 type Props = { children: ReactNode };
 
 const AppProvider: FC<Props> = ({ children }) => (
   <ConditionProvider>
     <FontNamesProvider>
-      <PortProvider>
+      <PortsProvider>
         {children}
-      </PortProvider>
+      </PortsProvider>
     </FontNamesProvider>
   </ConditionProvider>
 );

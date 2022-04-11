@@ -1,9 +1,9 @@
 import { BrowserWindow, FileFilter, IpcMainEvent, IpcMainInvokeEvent, dialog } from 'electron';
 import { download } from 'electron-dl';
 
-import { port } from './pytxt2aa';
+import { ports } from './pytxt2aa';
 
-export const getPort = (_: IpcMainInvokeEvent): number => port;
+export const getPorts = (_: IpcMainInvokeEvent): number[] => ports.length ? ports : [33333];
 
 const openFile = async (event: IpcMainInvokeEvent, filters: FileFilter[]): Promise<string> => {
   const win = BrowserWindow.fromWebContents(event.sender);

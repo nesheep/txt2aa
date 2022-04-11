@@ -9,28 +9,30 @@ import ConditionArea from './components/ConditionArea';
 import ImgFrame from './components/ImgFrame';
 import TitleBar from './components/TitleBar';
 import { getTxt2imgUrl, getTxt2aaUrl, getTxt2aaimgUrl } from './models/condition';
-import { ConditionContext, PortContext } from './state/contexts';
+import { ConditionContext, PortsContext } from './state/contexts';
 
 const App: FC = () => {
   const { condition } = useContext(ConditionContext);
-  const { port, setPort } = useContext(PortContext);
+  const { ports, setPorts } = useContext(PortsContext);
 
   useEffect(() => {
     (async () => {
-      const p = await window.api.getPort();
-      if (!p) return;
+      const ps = await window.api.getPorts();
+      if (!ps.length) return;
       for (let i = 0; i < 120; i++) {
         try {
-          await fetch(`http://localhost:${p}`);
+          for (let j = 0; j < ps.length; j++) {
+            await fetch(`http://localhost:${ps[j]}`);
+          }
           break;
         } catch (error) {
           if (error instanceof Error) console.error(error.message);
           await new Promise<void>(resolve => setTimeout(resolve, 250));
         }
       }
-      setPort(p);
+      setPorts(ps);
     })();
-  }, [setPort]);
+  }, [setPorts]);
 
   return (
     <>
@@ -56,7 +58,7 @@ const App: FC = () => {
         }}>
           <ImgFrame
             alt="txt2img"
-            src={getTxt2imgUrl(condition, port)}
+            src={getTxt2imgUrl(condition, ports)}
             download="before.png"
           />
         </Box>
@@ -68,7 +70,7 @@ const App: FC = () => {
         }}>
           <ImgFrame
             alt="txt2aa"
-            src={getTxt2aaimgUrl(condition, port)}
+            src={getTxt2aaimgUrl(condition, ports)}
             download="after.png"
           />
           <Box sx={{
@@ -78,12 +80,12 @@ const App: FC = () => {
             bgcolor: grey.A200,
             borderRadius: '100%',
           }}>
-            <IconButton onClick={() => window.api.download(getTxt2aaUrl(condition, port), 'aa.txt')}>
+            <IconButton onClick={() => window.api.download(getTxt2aaUrl(condition, ports), 'aa.txt')}>
               <TxtDownloadIcon />
             </IconButton>
           </Box>
         </Box>
-        <BackdropProgress open={Boolean(!port)} />
+        <BackdropProgress open={!ports.length} />
       </Box>
     </>
   );
