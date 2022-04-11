@@ -18,11 +18,9 @@ const SliderInput: FC<Props> = ({ isSlider, value, onChange, min, max, step = 1,
 
   return (isSlider ?
     <Slider
-      value={value}
-      onChange={(_, value) => {
-        setInputValue(String(value));
-        onChange(Number(value));
-      }}
+      value={Number(inputValue)}
+      onChange={(_, value) => setInputValue(String(value))}
+      onChangeCommitted={(_, value) => onChange(Number(value))}
       min={min}
       max={max}
       step={step}
