@@ -50,7 +50,7 @@ const quit = () => {
 app.whenReady().then(async () => {
   if (app.isPackaged) {
     const cpusLen = cpus().length;
-    const procs = cpusLen > 2 ? cpusLen : 2;
+    const procs = cpusLen < 8 ? cpusLen : 8;
     await pytxt2aa.run(procs);
   }
 
