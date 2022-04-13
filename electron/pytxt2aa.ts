@@ -27,7 +27,6 @@ const runOne = async (): Promise<void> => {
   if (proc.pid) pids.push(proc.pid);
 };
 
-
 export const run = async (procs: number = 1): Promise<void> => {
   for (let i = 0; i < procs; i++) await runOne();
 };

@@ -91,7 +91,7 @@ def aa2img(
     font = ImageFont.truetype(fontpath, int(cel_h * exp))
     for aa_row, r in zip(aa, range(len(aa))):
         for aa_str, c in zip(aa_row, range(len(aa_row))):
-            if aa_str:
+            if aa_str and not aa_str in " 　":
                 xy = (cel_w * (c + 0.5), cel_h * (r + 0.5))
                 draw.text(xy, aa_str, color, font, "mm")
     return img
