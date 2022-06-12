@@ -4,7 +4,7 @@ import * as path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
-import * as C from './cannel';
+import * as C from './channel';
 import * as listener from './listener';
 import * as pytxt2aa from './pytxt2aa';
 

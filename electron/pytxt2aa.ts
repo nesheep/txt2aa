@@ -23,7 +23,7 @@ const randomPort = async (): Promise<number> => {
 const runOne = async (): Promise<void> => {
   const port = await randomPort();
   ports.push(port);
-  const proc = spawn(path.resolve('libs/pytxt2aa/pytxt2aa.exe'), ['-p', String(port)]);
+  const proc = spawn(path.resolve('lib/pytxt2aa/pytxt2aa.exe'), ['-p', String(port)]);
   if (proc.pid) pids.push(proc.pid);
 };
 

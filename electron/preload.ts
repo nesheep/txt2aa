@@ -1,6 +1,6 @@
 import { ipcRenderer, contextBridge } from 'electron';
 
-import * as C from './cannel';
+import * as C from './channel';
 
 contextBridge.exposeInMainWorld('api', {
   getPorts: async (): Promise<number[]> => await ipcRenderer.invoke(C.GET_PORTS),
